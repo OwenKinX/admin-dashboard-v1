@@ -1,0 +1,7 @@
+button[type="button"] {
+    width:"100%";
+}
+.img-thumbnail{
+    width: 300px;
+    margin: 0 auto;
+}

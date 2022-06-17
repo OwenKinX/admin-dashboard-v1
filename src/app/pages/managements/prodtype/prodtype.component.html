@@ -1,0 +1,122 @@
+<div class="container-fluid px-4">
+
+    <div class="row mt-4">
+        <div class="col-lg-8 col-md-12">
+            <div class="card shadow mb-3">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="m-0 text-primary">ຂໍ້ມູນປະເພດສິນຄ້າ</h3>
+                        <button onclick="window.location.reload(true)" class="btn btn-outline-success"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+                <ngx-spinner 
+                    bdColor = "rgba(0, 0, 0, 0.2)" 
+                    size = "medium" 
+                    color = "#fff" 
+                    type = "ball-scale-multiple" 
+                    [fullScreen] = "false"
+                >
+                </ngx-spinner>
+                <div class="card-body">
+                    <table *ngIf="prodtypeService.prodtypes" datatable [dtOptions]="dtOptions" class="table table-hover table-striped">
+                        <thead class="bg-secondary text-light">
+                            <tr role="row">
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>ຊື່</th>
+                                <th>ຊື່ພາສາອັງກິດ</th>
+                                <th>ໝວດໝູ່</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prodtype of prodtypeService.prodtypes; let i=index;" >
+                                <td class="font-eng">{{i+1}}.</td>
+                                <td>{{prodtype.pt_id}}</td>
+                                <td>{{prodtype.name}}</td>
+                                <td>{{prodtype.name_en}}</td>
+                                <td>{{prodtype.category}}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn-sm btn btn-warning" (click)="onEdit(prodtype);">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-sm btn btn-danger" (click)="onDelete(prodtype._id, prodtypeForm)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table *ngIf="!prodtypeService.prodtypes" class="table table-hover table-striped">
+                        <thead class="bg-secondary text-light">
+                            <tr role="row">
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>ຊື່</th>
+                                <th>ຊື່ພາສາອັງກິດ</th>
+                                <th>ໝວດໝູ່</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr>
+                                <td colspan="5" class="text-center">ບໍ່ມີຂໍ້ມູນ | No data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow mb-3">
+                <div class="card-header">
+                    <h3 *ngIf="!isSwap" class="m-0 text-primary">ເພີ່ມປະເພດສິນຄ້າ</h3>
+                    <h3 *ngIf="isSwap" class="m-0 text-primary">ແກ້ໄຂຂໍ້ມູນປະເພດສິນຄ້າ</h3>
+                </div>
+                <div class="card-body">
+                    <form (ngSubmit)="onSubmit(prodtypeForm)" #prodtypeForm="ngForm">
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="prodtypeService.selectedProdType._id">
+                        <div class="form-floating">
+                            <input *ngIf="!isSwap" upperCase type="text" class="form-control" id="ptid" name="pt_id" #pt_id="ngModel" [(ngModel)]="prodtypeService.selectedProdType.pt_id" placeholder="ສິນຄ້າ" required>
+                            <input *ngIf="isSwap" upperCase type="text" class="form-control" id="ptid" name="pt_id" #pt_id="ngModel" [(ngModel)]="prodtypeService.selectedProdType.pt_id" placeholder="ສິນຄ້າ" readonly>
+                            <label for="ptid">ປ້ອນລະຫັດປະເພດສິນຄ້າ</label>
+                        </div>
+                        <small *ngIf="!isSwap" class="text-danger ps-1 my-0">*ຖ້າເພີ່ມຂໍ້ມູນແລ້ວຈະບໍ່ສາມາດແກ້ໄຂໄດ້</small>
+                        <div class="form-floating mt-3">
+                            <input class="form-control" id="name" type="text" name="name" #name="ngModel" [(ngModel)]="prodtypeService.selectedProdType.name" placeholder="ສິນຄ້າ" required>
+                            <label for="name">ປ້ອນປະເພດສິນຄ້າ</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input class="form-control" id="name_en" type="text" name="name_en" #name_en="ngModel" [(ngModel)]="prodtypeService.selectedProdType.name_en" placeholder="ສິນຄ້າ" required>
+                            <label for="name_en">ປ້ອນປະເພດສິນຄ້າພາສາອັງກິດ</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <select class="form-select" id="cat" name="category" #category="ngModel" [(ngModel)]="prodtypeService.selectedProdType.category" required>
+                                <option class="text-muted" selected> --- ກະລຸນາເລືອກໝວດໝູ່ --- </option>
+                                <option *ngFor="let item of categoryList;" value="{{item.pc_id}}">{{item.name}}</option>
+                            </select>
+                            <label for="cat">ເລືອກໝວດໝູ່</label>
+                        </div>
+                        <div class="mt-3">
+                            <button *ngIf="!isSwap" type="submit" class="btn btn-primary" style="width: 120px;" [disabled]="!prodtypeForm.valid">
+                                <i class="fas fa-circle-plus"></i>&nbsp;ເພີ່ມຂໍ້ມູນ
+                            </button>
+                            <button *ngIf="isSwap" type="submit" class="btn btn-warning" style="width: 120px;" [disabled]="!prodtypeForm.valid">
+                                <i class="fas fa-edit"></i>&nbsp;ແກ້ໄຂຂໍ້ມູນ
+                            </button>
+                            &nbsp;
+                            <button type="reset" class="btn btn-danger"  style="width: 120px;" (click)="resetForm(prodtypeForm)">
+                                <i class="fa-solid fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

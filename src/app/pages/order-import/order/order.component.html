@@ -1,0 +1,80 @@
+<div class="container-fluid px-4">
+    <div class="row my-3">
+        <div class="col-lg-12 col-md-12">
+            <div class="card shadow mb-3">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between">
+                        <button routerLink="/order-list" class="btn btn-outline-primary">
+                            <i class="fas fa-angles-left"></i>
+                        </button>
+                        <button onclick="window.location.reload(true)" class="btn btn-outline-success">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <fieldset class="border border-primary px-3 pb-2 rounded-3">
+                        <legend class="float-none w-auto p-2 h3 text-primary m-2">ລາຍລະອຽດການສັ່ງຊື້</legend>
+
+                        <table *ngIf="orderDetailList.length" datatable [dtOptions]="dtOptions" class="table table-bordered">
+                            <thead class="bg-secondary text-light">
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                    <th>ສິນຄ້າ</th>
+                                    <th>ລາຄາຊື້</th>
+                                    <th>ຈຳນວນ</th>
+                                    <th>Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderDetailList; let i=index;">
+                                    <td class="font-eng">{{i+1}}.</td>
+                                    <td class="font-eng">{{item.order_no}}</td>
+                                    <td class="font-eng">{{item.pro_id}}</td>
+                                    <td class="font-eng">{{item.price | number}} LAK</td>
+                                    <td class="font-eng">{{item.qty}}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-danger" (click)="onDelete(item.order_no)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table *ngIf="!orderDetailList.length" class="table table-bordered">
+                            <thead class="bg-light">
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>ລາຄາຊື້</th>
+                                    <th>ຈຳນວນ</th>
+                                    <th>ສິນຄ້າ</th>
+                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" class="text-center">ບໍ່ມີຂໍ້ມູນ | No Data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </fieldset>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="me-1 btn btn-warning" (click)="goToLink('')">
+                        <i class="fas fa-print"></i>&nbsp;ພິມໃບສັ່ງຊື້ສິນຄ້າ
+                    </button>
+                    <button type="button" class="ms-1 btn btn-danger" routerLink="/rep-order">
+                        <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

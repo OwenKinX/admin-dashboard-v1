@@ -1,0 +1,19 @@
+.text-blue{color: #2ea3de;}
+.dropdown-item {
+    cursor: pointer;
+}
+
+.btn-login, .btn-register{
+    background: #333;
+    color: #fff;
+    border:none;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 10px;
+}    
+.btn-login:hover{
+    background: rgba(2, 2, 2, 0.2);
+}
+.btn-register:hover{
+    background: rgba(2, 2, 2, 0.2);
+}

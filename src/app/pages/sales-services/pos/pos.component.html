@@ -1,0 +1,110 @@
+<div class="container-fluid px-4">
+    <div class="row mt-3">
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select class="form-select" #selecttype>
+                                    <option selected disabled> -- ລະບຸປະເພດສິນຄ້າ -- </option>
+                                    <option *ngFor="let item of typeList;" value="{{item.pt_id}}">{{item.name}}</option>
+                                </select>
+                            </div>
+                            <div class="ps-lg-0 col-md-1">
+                                <button type="button" class="btn btn-primary" (click)="filterProduct(selecttype.value)">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="ps-lg-0 col-md-3">
+                                <button type="reset" class="btn btn-success" (click)="displayAllProduct()">
+                                    ສະແດງລາຍການທັງໝົດ
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" id="prod_grid">
+                    <div class="row">
+
+                        <div *ngFor="let item of productList;" class="col-md-3 mb-3">
+                            <div class="card" id="card-hov" (click)="addItemToLits(item)">
+                                <div class="img-container">
+                                    <img src="{{item.image}}" class="card-img-top" alt="{{item.pro_id}}" style="height: 180px;">
+                                    <span class="product-no font-lao fw-bold">{{item.pro_id}}</span>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">{{item.name}}</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="font-eng">ລາຄາ: {{item.price | number}} LAK</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 ps-0">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="text-muted">
+                            <tr>
+                                <th>ສິນຄ້າ</th>
+                                <th>ລາຄາ</th>
+                                <th>ຈຳນວນ</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of saleList;">
+                                <td>{{item.name}}</td>
+                                <td>{{item.price | number}}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-sm btn-primary fw-bold" (click)="decrease(item.pro_id, item.qty)">
+                                            <i class="fas fa-circle-minus"></i>
+                                        </button>
+                                        <span class="my-0 py-1 mx-2 font-eng">{{item.qty}}</span>
+                                        <button class="btn btn-sm btn-primary fw-bold" (click)="increase(item.pro_id, item.qty)">
+                                            <i class="fas fa-circle-plus"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-danger" (click)="removeItem(item.pro_id)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <dl class="dlist-align">
+                        <h4>ລວມ: {{grandTotal | number}} LAK</h4>
+                    </dl>
+                    <div class="row">
+                        <div class="pe-lg-1 col-md-6">
+                            <button type="reset" class="btn btn-warning" (click)="emptyPOSList()">
+                                <i class="fas fa-times-circle "></i> ຍົກເລີກ 
+                            </button>
+                        </div>
+                        <div class="ps-lg-1 col-md-6">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-calculator"></i> ຄິດເງິນ 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="container-fluid px-4">
+    <div class="bg-gray rounded shadow">
+        <h3 class="m-0 py-3 text-primary text-center shadow">ຂໍ້ມູນພະນັກງານ</h3>
+    </div>
+    <div class="card shadow">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <button onclick="window.location.reload(true)" class="btn btn-outline-success"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="btn btn-primary" routerLink="/add-employee"><i class="fa-solid fa-circle-plus"></i> ເພີ່ມຂໍ້ມູນ</button>
+            </div>
+        </div>
+
+        <ngx-spinner 
+            bdColor = "rgba(0, 0, 0, 0.2)" 
+            size = "medium" 
+            color = "#fff" 
+            type = "ball-scale-multiple" 
+            [fullScreen] = "false"
+        >
+        </ngx-spinner>
+
+        <div class="card-body" id="emp_list">
+            <table *ngIf="Employees.length" datatable [dtOptions]="dtOptions" class="table table-hover table-striped">
+                <thead class="bg-secondary text-light">
+                    <tr role="row">
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+                        <th>ເບີໂທ</th>
+                        <th>ເພດ</th>
+                        <th>ຕຳແໜ່ງ</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of Employees; let i=index;">
+                        <td class="font-eng">{{i+1}}.</td>
+                        <td>{{emp.emp_id}}</td>
+                        <td>{{emp.name}} {{emp.surname}}</td>
+                        <td class="font-eng">+856-20-{{emp.phone}}</td>
+                        <td>{{emp.gender}}</td>
+                        <td>{{emp.position}}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn-sm btn btn-success" routerLink="/emp-view/{{emp._id}}" >
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </button>
+                                <button class="btn-sm btn btn-warning text-black" routerLink="/edit-employee/{{emp._id}}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-sm btn btn-danger" (click)="onDelete(emp._id, i)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table *ngIf="!Employees.length" class="table table-striped">
+                <thead class="bg-secondary text-light">
+                    <tr role="row">
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+                        <th>ເບີໂທ</th>
+                        <th>ເພດ</th>
+                        <th>ຕຳແໜ່ງ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" class="text-center">ບໍ່ມີຂໍ້ມູນ | No Data</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="card-footer">
+            <div class="text-end">
+                <button class="btn btn-danger" routerLink="/rep-emps">
+                    <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

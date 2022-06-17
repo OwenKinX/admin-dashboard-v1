@@ -1,0 +1,10 @@
+.img-box, img{
+    width: 180px;
+    border-radius: 50%;
+}
+.bg-info{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

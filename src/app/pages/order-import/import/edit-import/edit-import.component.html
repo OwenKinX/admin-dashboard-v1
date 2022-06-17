@@ -1,0 +1,89 @@
+<div class="container-fluid px-4">
+    <div class="card my-3 shadow">
+        <div class="card-body">
+            <fieldset class="border border-primary p-2 px-4  pb-4 rounded-3">
+                <legend class="float-none w-auto p-2 h3 text-primary">ແກ້ໄຂຂໍ້ມູນການນຳເຂົ້າສິນຄ້າ</legend>
+                <form [formGroup]="updateImportForm" (submit)="onUpdate()">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input upperCase type="text" formControlName="imp_no" id="impno" class="form-control font-eng" placeholder="import" readonly>
+                                <label for="impno">ເລກທີນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" formControlName="c_price" id="cost" class="form-control font-eng" placeholder="import">
+                                <label for="cost">ລາຄານຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" formControlName="imp_qty" id="qty" class="form-control font-eng" placeholder="import">
+                                <label for="qty">ຈຳນວນນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="date" formCotrolName="date" id="date" class="form-control font-eng" placeholder="import">
+                                <label for="date">ວັນທີນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" formControlName="bill_no" id="bill" class="form-control font-eng" placeholder="import">
+                                <label for="bill">ເລກທີບິນຈາກຜູ້ສະໜອງ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select formControlName="product" id="product" class="form-select" placeholder="product">
+                                    <option disabled selected value="null"> --- ເລືອກສິນຄ້າທີ່ໄດ້ນຳເຂົ້າ --- </option>
+                                    <option *ngFor="let item of productList;" value="{{item.pro_id}}">{{item.name}}</option>
+                                </select>
+                                <label for="product">ສິນຄ້າທີ່ໄດ້ນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select formControlName="order" id="o" class="form-select" placeholder="import">
+                                    <option disabled selected value="null"> --- ເລືອກເລກທີບິນສັ່ງຊື້ --- </option>
+                                    <option *ngFor="let item of orders;" value="{{item.order_no}}">{{item.order_no}}</option>
+                                </select>
+                                <label for="o">ເລກທີບິນນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select formControlName="employee" id="e" class="form-select" placeholder="import">
+                                    <option disabled selected value="null"> --- ເລືອກພະນັກງານ --- </option>
+                                    <option *ngFor="let item of employees;" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                </select>
+                                <label for="e">ພະນັກງານຜູ້ນຳເຂົ້າ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" [disabled]="!updateImportForm.valid">
+                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="reset" class="btn btn-warning">
+                                <i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="card-footer">
+            <div class="col-md-3 ms-auto">
+                <button class="btn btn-outline-primary" routerLink="/import">
+                    <i class="fa-solid fa-angles-left"></i>&nbsp;ກັບຄືນ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

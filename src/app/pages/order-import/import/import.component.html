@@ -1,0 +1,82 @@
+<div class="container-fluid px-4">
+    <div class="bg-gray rounded shadow">
+        <h3 class="m-0 py-3 text-primary text-center">ຂໍ້ມູນການນຳເຂົ້າສິນຄ້າ</h3>
+    </div>
+    <div class="card shadow">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <button onclick="window.location.reload(true)" class="btn btn-outline-success"><i class="fa-solid fa-rotate-right"></i></button>
+                <button class="btn btn-primary" routerLink="/add-import"><i class="fa-solid fa-circle-plus"></i> ເພີ່ມຂໍ້ມູນ</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table *ngIf="imports.length" datatable class="table table-hover table-striped">
+                <thead class="bg-secondary text-light">
+                    <tr role="row">
+                        <th>#</th>
+                        <th>ເລກທີນຳເຂົ້າ</th>
+                        <th>ເລກທີໃບສັ່ງຊື້</th>
+                        <th>ເລກບິນ</th>
+                        <th>ສິນຄ້າ</th>
+                        <th>ລາຄານຳເຂົ້າ</th>
+                        <th>ຈຳນວນນຳເຂົ້າ</th>
+                        <th>ວັນທີນຳເຂົ້າ</th>
+                        <th>ນຳເຂົ້າໂດຍ</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let imp of imports; let i=index;">
+                        <td class="font-eng">{{i+1}}.</td>
+                        <td class="font-eng">{{imp.imp_no}}</td>
+                        <td class="font-eng">{{imp.order}}</td>
+                        <td class="font-eng">{{imp.bill_no}}</td>
+                        <td class="font-eng">{{imp.product}}</td>
+                        <td class="font-eng">{{imp.c_price.toLocaleString()}} LAK</td>
+                        <td class="font-eng">{{imp.imp_qty}}</td>
+                        <td class="font-eng">{{imp.date | date:'dd/MM/yyyy'}}</td>
+                        <td class="font-eng">{{imp.employee}}</td>
+                        <td class="d-flex">
+                            <div class="btn-group" role="group">
+                                <button class="btn-sm btn btn-warning disabled" routerLink="/edit-import/{{imp._id}}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-sm btn btn-danger" (click)="onDelete(imp._id, i)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table *ngIf="!imports.length" class="table table-hover table-striped">
+                <thead class="bg-secondary text-light">
+                    <tr role="row">
+                        <th>#</th>
+                        <th>ເລກທີນຳເຂົ້າ</th>
+                        <th>ເລກທີໃບສັ່ງຊື້</th>
+                        <th>ເລກບິນ</th>
+                        <th>ສິນຄ້າ</th>
+                        <th>ລາຄານຳເຂົ້າ</th>
+                        <th>ຈຳນວນນຳເຂົ້າ</th>
+                        <th>ວັນທີນຳເຂົ້າ</th>
+                        <th>ນຳເຂົ້າໂດຍ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9" class="text-center">ບໍ່ມີຂໍ້ມູນ | No Data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="text-end">
+                <button class="btn btn-danger" routerLink="/rep-imp">
+                    <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.btn-warning, .btn-primary{ width: 100%; }
+.card{ cursor: pointer; }
+#card-hov:hover{ border: 1px solid #1170de; }
+#prod_grid{
+    height: 600px;
+    overflow-y: auto;
+}
+.img-container{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.product-no{
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 1px 5px;
+    padding-top: 1px;
+    background-color: rgba(0,0,0, 0.5);
+    border-radius: 2px;
+    font-size: 12px;
+}

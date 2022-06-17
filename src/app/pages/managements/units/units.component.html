@@ -1,0 +1,114 @@
+<div class="container-fluid px-4">
+    <div class="row mt-3">
+        <div class="col-lg-7">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="m-0 text-primary">ຂໍ້ມູນຫົວໜ່ວຍສິນຄ້າ</h3>
+                        <button onclick="window.location.reload(true)" class="btn btn-outline-success"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+                <ngx-spinner 
+                    bdColor = "rgba(0, 0, 0, 0.2)" 
+                    size = "medium" 
+                    color = "#fff" 
+                    type = "ball-scale-multiple" 
+                    [fullScreen] = "false"
+                >
+                </ngx-spinner>
+                <div class="card-body">
+                    
+                    <table *ngIf="unitService.units" datatable [dtOptions]="dtOptions" class="table table-hover table-striped">
+                        <thead class="bg-secondary text-light">
+                            <tr role="row">
+                                <th>#</th>
+                                <th>ສັນຍາລັກ</th>
+                                <th>ຊື່</th>
+                                <th>ຊື່ພາສາອັງກິດ</th>
+                                <th>Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let unit of unitService.units; let i=index">
+                                <td class="font-eng">{{i+1}}.</td>
+                                <td>{{unit.symbol}}</td>
+                                <td>{{unit.name}}</td>
+                                <td class="font-eng">{{unit.name_en}}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn-sm btn btn-warning" (click)="onEdit(unit)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-sm btn btn-danger" (click)="onDelete(unit._id, unitForm)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table *ngIf="!unitService.units" class="table table-striped">
+                        <thead class="bg-secondary text-light">
+                            <tr role="row">
+                                <th>#</th>
+                                <th>ສັນຍາລັກ</th>
+                                <th>ຊື່</th>
+                                <th>ຊື່ພາສາອັງກິດ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center">ບໍ່ມີຂໍ້ມູນ | No Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow mb-3">
+                <div class="card-header">
+                    <h3 *ngIf="!isSwap" class="m-0 text-primary">ເພີ່ມຫົວໜ່ວຍສິນຄ້າ</h3>
+                    <h3 *ngIf="isSwap" class="m-0 text-primary">ແກ້ໄຂຂໍ້ມູນຫົວໜ່ວຍສິນຄ້າ</h3>
+                </div>
+                <div class="card-body">
+                    <form #unitForm="ngForm" (ngSubmit)="onSubmit(unitForm)">
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="unitService.selectedUnit._id">
+                        <div class="form-floating mb-3">
+                            <input *ngIf="!isSwap" class="form-control" name="symbol" #symbol="ngModel" [(ngModel)]="unitService.selectedUnit.symbol" id="inputUnit" type="text" placeholder="ປ້ອນຫົວໜ່ວຍສິນຄ້າ" required>
+                            <input *ngIf="isSwap" class="form-control" name="symbol" #symbol="ngModel" [(ngModel)]="unitService.selectedUnit.symbol" id="inputUnit" type="text" placeholder="ປ້ອນຫົວໜ່ວຍສິນຄ້າ" readonly/>
+                            <label for="inputUnit">ປ້ອນສັນຍາລັກ</label>
+                            <small *ngIf="!isSwap" class="form-text text-primary">ຕົວຢ່າງ: ລິດ = L, ຖ້າບໍ່ມີໃສ່ --</small>
+                            <small *ngIf="!isSwap" class="text-danger ps-1">&nbsp;*ຖ້າເພີ່ມຂໍ້ມູນແລ້ວຈະບໍ່ສາມາດແກ້ໄຂໄດ້</small>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="unitService.selectedUnit.name" id="inputUnit" type="text" placeholder="ປ້ອນຫົວໜ່ວຍສິນຄ້າ" required>
+                            <label for="inputUnit">ປ້ອນຫົວໜ່ວຍສິນຄ້າ</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <input class="form-control" name="name_en" #name_en="ngModel" [(ngModel)]="unitService.selectedUnit.name_en" id="inputUnit" type="text" placeholder="ປ້ອນຫົວໜ່ວຍສິນຄ້າ" required>
+                            <label for="inputUnit">ປ້ອນຫົວໜ່ວຍສິນຄ້າພາສາອັງກິດ</label>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button *ngIf="!isSwap" type="submit" class="btn btn-primary" style="width: 120px" [disabled]="!unitForm.valid">
+                                <i class="fas fa-circle-plus"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                            </button>
+                            <button *ngIf="isSwap" type="submit" class="btn btn-success" style="width: 120px" [disabled]="!unitForm.valid">
+                                <i class="fas fa-edit"></i>&nbsp;ແກ້ໄຂຂໍ້ມູນ
+                            </button>
+                            &nbsp;
+                            <button type="button" class="btn btn-warning" style="width: 120px" (click)="resetForm(unitForm)">
+                                <i class="fa-solid fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

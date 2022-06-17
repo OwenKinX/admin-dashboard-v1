@@ -1,0 +1,117 @@
+<div class="container-fluid px-4">
+    <div class="bg-gray rounded shadow">
+        <h2 class="m-0 py-2 ps-2 text-primary">ຟອມເພີ່ມຂໍ້ມູນລູກຄ້າ</h2>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <!-- ແຖວ 1 -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="name" type="text" formControlName="name" placeholder="ລູກຄ້າ" required />
+                                    <label for="name">ຊື່ລູກຄ້າ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="surname" type="text" formControlName="surname" placeholder="ລູກຄ້າ" required />
+                                    <label for="surname">ນາມສະກຸນລູກຄ້າ</label>
+                                </div>
+                            </div>
+
+                            <!-- ແຖວ 2 -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="email" type="text" formControlName="email" placeholder="ລູກຄ້າ" required />
+                                    <label for="email">ອີເມວລູກຄ້າ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display: none;">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="password" type="password" formControlName="password" readonly required/>
+                                    <label for="password">ລະຫັດຜ່ານລູກຄ້າ</label>
+                                </div>
+                            </div>
+
+                            <!-- ແຖວ 3 -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control font-eng" id="phone" type="number" formControlName="phone" placeholder="ລູກຄ້າ" required />
+                                    <label for="phone">ເບີໂທລູກຄ້າ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control font-eng" id="dob" sanitizeDate type="date" formControlName="dob" placeholder="ລູກຄ້າ" required />
+                                    <label for="dob">ວັນ,ເດືອນ,ປີ ເກີດ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>ເລືອກເພດ</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" formControlName="gender" id="male" value="ຊາຍ">
+                                            <label class="form-check-label" for="male">ຊາຍ</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" formControlName="gender" id="female" value="ຍິງ">
+                                            <label class="form-check-label" for="female">ຍິງ</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" formControlName="gender" id="other" value="ອື່ນໆ">
+                                            <label class="form-check-label" for="other">ອື່ນໆ</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <label class="ms-1">ທີ່ຢູ່ລູກຄ້າ</label>
+                            <!-- ແຖວ 4 -->
+
+                            <!-- <div class="row" formGroupName="address"> -->
+                                <div class="col-md-4 ">
+                                    <div class="form-floating mt-2">
+                                        <input class="form-control" id="user_province" type="text" formControlName="province" placeholder="province" required />
+                                        <label for="user_province">ແຂວງຢູ່ປັດຈຸບັນ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mt-2">
+                                        <input class="form-control" id="user_district" type="text" formControlName="district" placeholder="district" required />
+                                        <label for="user_district">ເມືອງຢູ່ປັດຈຸບັນ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating mt-2">
+                                        <input class="form-control" id="user_village" type="text" formControlName="village" placeholder="village" required />
+                                        <label for="user_village">ບ້ານຢູ່ປັດຈຸບັນ</label>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid"><i class="fas fa-user-edit"></i>&nbsp;ບັນທຶກຂໍ້ມູນ</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="reset" class="btn btn-warning"><i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-info" routerLink="/list-cus"><i class="fas fa-angle-left"></i>&nbsp;ກັບຄືນ</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

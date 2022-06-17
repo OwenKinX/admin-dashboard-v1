@@ -1,0 +1,138 @@
+<div class="container-fluid px-4">
+
+    <div class="alert alert-light shadow mt-3">
+        <h4 class="my-0 text-center text-primary">ລາຍງານຂໍ້ມູນລູກຄ້າ</h4>
+    </div>
+    
+    <!-- Preview report -->
+    <div class="card my-3 shadow">
+        <div class="card-header">
+            <div class="text-end">
+                <button class="btn btn-secondary" routerLink="/list-cus">
+                    <i class="fas fa-eye"></i>&nbsp;ສະແດງຂໍ້ມູນທັງໝົດ
+                </button>
+                &nbsp;
+                <button class="btn btn-danger" (click)="exportPDF()">
+                    <i class="fas fa-file-pdf" ></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-success" (click)="exportExcel()">
+                    <i class="fas fa-file-excel"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="card-body" id="prev-section">
+            <div id="userTable" #userTable>
+                <table class="table table-bordered" id="user-table">
+                    <thead class="text-primary bg-light">
+                        <tr>
+                            <th>ລ/ດ</th>
+                            <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+                            <th>ອີເມວ</th>
+                            <th>ເບີໂທ ຫຼື ເບີ WhatsApp</th>
+                            <th>ທີ່ຢູ່ປັດຈຸບັນ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of userList; let i=index;">
+                            <td class="font-eng">{{i+1}}.</td>
+                            <td class="font-eng">{{user.name}} {{user.surname}}</td>
+                            <td class="font-eng">{{user.email}}</td>
+                            <td class="font-eng">+856-20-{{user.phone}}</td>
+                            <td>ບ.{{user.village}}, ມ.{{user.district}}, {{user.province}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr class="text-primary">
+                            <td colspan="4" class="text-end fw-bold">ຈຳນວນສະມາຊິກທັງໝົດ</td>
+                            <td class="text-center fw-bold font-eng">{{userList.length}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-end">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal">
+                    <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
+                </button> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Report -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title m-0 p-0" id="exampleModalLabel">ລາຍງານ</h4>
+                <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="print-section">
+                    <div class="mt-3 mb-5 text-center">
+                        <img src="assets/images/logo.png" width="100px" alt="ຮູບໂລໂກ້ຮ້ານ">
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-sm-8 font-lao">
+                            <h5 class="text-primary">ຮ້ານ SS ຊີ້ນສະໄລ້ ແລະ ອາຫານແຊ່ແຂງ</h5>
+                            ບ.ດົງຄຳຊ້າງ, ມ.ຫາດຊາຍຟອງ, ນະຄອນຫຼວງວຽງຈັນ<br>
+                            ເບີໂທ 020 56888815
+                        </div>
+                        <div class="col-sm-4 font-lao text-end">
+                            ວັນທີ: {{ dateTime | date: 'dd/MM/yyyy' }}<br>
+                            ເວລາ: {{ dateTime | date: 'HH:mm:ss'}}
+                        </div>
+                    </div>
+                    <div class="my-4">
+                        <p class="font-lao" style="text-align:center; font-weight:bold; font-size: 20px;">ລາຍງານຂໍ້ມູນລູກຄ້າ</p>
+                    </div>
+    
+                    <table class="table table-bordered" id="user-table">
+                        <thead>
+                            <tr>
+                                <th class="font-lao">ລ/ດ</th>
+                                <th class="font-lao">ຊື່ ແລະ ນາມສະກຸນ</th>
+                                <th class="font-lao">ອີເມວ</th>
+                                <th class="font-lao">ເບີໂທ ຫຼື ເບີ WhatsApp</th>
+                                <th class="font-lao">ທີ່ຢູ່ປັດຈຸບັນ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of userList; let i=index;">
+                                <td class="font-eng">{{i+1}}.</td>
+                                <td class="font-eng">{{user.name}} {{user.surname}}</td>
+                                <td class="font-eng">{{user.email}}</td>
+                                <td class="font-eng">+856-20-{{user.phone}}</td>
+                                <td class="font-lao">ບ.{{user.village}}, ມ.{{user.district}}, {{user.province}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-end fw-bold h5">ຈຳນວນສະມາຊິກທັງໝົດ</td>
+                                <td class="text-center fw-bold font-eng h5">{{userList.length}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+    
+                    <div class="row justify-content-end">
+                        <div class="col-sm-3">
+                            <p class="fw-bold font-lao mb-5">ລາຍເຊັນ<br><br><span class="fw-light">.....................................</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-2">
+                <div class="text-end">
+                    <button class="btn btn-primary" onclick="printDiv('print-section')" (click)="goToLink('')">
+                        <i class="fas fa-arrow-alt-circle-down"></i>&nbsp;ນຳລາຍງານອອກ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

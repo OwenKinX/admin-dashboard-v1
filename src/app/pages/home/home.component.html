@@ -1,0 +1,120 @@
+<div class="container-fluid px-4">
+    <ngx-spinner 
+        bdColor = "rgba(0, 0, 0, 0.2)" 
+        size = "medium" 
+        color = "#fff" 
+        type = "ball-scale-multiple" 
+        [fullScreen]="true"
+    >
+    </ngx-spinner>
+    <div class="bg-gray row rounded shadow mt-3">
+
+        <div class="bg-gray rounded shadow d-flex justify-content-between align-items-center">
+            <h2 class="m-0 py-3 text-primary">ໜ້າຫຼັກ</h2>
+            <p class="time m-1 text-muted">{{ dateTime | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-3" id="blue-card">
+                <div class="card-body">
+                    <p class="m-0">ຈຳນວນສິນຄ້າໃນສຕັອກ</p>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="mt-2 fw-bold text-white font-eng">{{inStock.length}} <small>ລາຍການ</small></h2>
+                        <i class="fas fa-box fa-3x text-gray-500"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                    <a class="small text-white stretched-link" routerLink="/list-product">ເບິ່ງລາຍລະອຽດ</a>
+                    <div class="small text-white">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ps-lg-0 col-xl-3 col-md-6">
+            <div class="card bg-info text-dark mb-3" id="sea-card">
+                <div class="card-body">
+                    <p class="m-0 text-black">ຈຳນວນລູກຄ້າ</p>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="mt-2 fw-bold text-white font-eng">{{userList.length}}</h2>
+                        <i class="fas fa-users fa-3x text-dark"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                    <a class="small text-white stretched-link" routerLink="/list-cus">ເບິ່ງລາຍລະອຽດ</a>
+                    <div class="small text-white">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-lg-0 col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-3" id="green-card">
+                <div class="card-body">
+                    <p class="m-0">ລາຍຮັບຂອງເດືອນນີ້</p>
+                    <div class="d-flex justify-content-between">
+                        <h2 *ngIf="!incomeTotal.length" class="mt-2 fw-bold font-eng">0 <small>ກີບ</small></h2>
+                        <h2 *ngFor="let income of incomeTotal;" class="mt-2 fw-bold font-eng">{{income.incTotal | number:'1.0-0' }} <small>ກີບ</small></h2>
+                        <i class="fas fa-chart-line fa-3x text-gray-500"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                    <a class="small text-white stretched-link" routerLink="/sale-manage">ເບິ່ງລາຍລະອຽດ</a>
+                    <div class="small text-white">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ps-lg-0 col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-3" id="red-card">
+                <div class="card-body">
+                    <p class="m-0">ລາຍຈ່າຍຂອງເດືອນນີ້</p>
+                    <div class="d-flex justify-content-between">
+                        <h2 *ngIf="!expanseTotal.length" class="mt-2 fw-bold font-eng">0 <small>ກີບ</small></h2>
+                        <h2 *ngFor="let expanse of expanseTotal;" class="mt-2 fw-bold font-eng">{{expanse.expTotal | number}} <small>ກີບ</small></h2>
+                        <i class="fas fa-chart-area fa-3x text-gray-500"></i>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between border-0">
+                    <a class="small text-white stretched-link" routerLink="/order-list">ເບິ່ງລາຍລະອຽດ</a>
+                    <div class="small text-white">
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row bg-gray rounded shadow">
+        <div class="col-md-12 my-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title my-1 text-primary">ລາຍງານລາຍຮັບ - ລາຍຈ່າຍ</h4>
+                        <!-- <div class="btn-group me-2" role="group">
+                            <button type="button" class="btn btn-outline-secondary">ເດືອນນີ້</button>
+                            <button type="button" class="btn btn-outline-secondary">6 ເດືອນ</button>
+                            <button type="button" class="btn btn-outline-secondary">ປີ</button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body" id="chart-setion">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <app-charts></app-charts>
+                        </div>
+                        <div class="col-md-6 mx-auto">
+                            <app-charts-year></app-charts-year>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

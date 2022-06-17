@@ -1,0 +1,105 @@
+<div class="container-fluid px-4">
+    <div class="card my-3 shadow">
+        <div class="card-body">
+            <fieldset class="border border-primary p-2 px-4 pb-4 rounded-3">
+                <legend class="float-none w-auto p-2 h3 text-primary">ແກ້ໄຂຂໍ້ມູນການຂາຍ</legend>
+                <form [formGroup]="updateSaleForm" (submit)="onUpdate()">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input upperCase type="text" formControlName="invoice_no" id="invno" class="form-control font-eng" placeholder="sale" readonly>
+                                <label for="invno">ເລກບິນການຂາຍ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select formControlName="sale_type" id="st" class="form-select" placeholder="sale">
+                                    <option selected disabled value="null"> --- ກະລຸນາລະບຸປະເພດການຂາຍ --- </option>
+                                    <option value="POS">ຂາຍໜ້າຮ້ານ</option>
+                                    <option value="Online">ຂາຍອອນລາຍ</option>
+                                </select>
+                                <label for="st">ປະເພດການຂາຍ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select formControlName="cash" id="cs" class="form-select" placeholder="sale">
+                                    <option selected disabled value="null"> --- ກະລຸນາລະບຸການຈ່າຍເງິນ --- </option>
+                                    <option value="ຈ່າຍເງິນສົດ">ຈ່າຍເງິນສົດ</option>
+                                    <option value="ຈ່າຍໂອນ">ຈ່າຍໂອນ</option>
+                                </select>
+                                <label for="cs">ການຈ່າຍເງິນ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="date" formControlName="date" id="dt" class="form-control font-eng" placeholder="sale">
+                                <label for="dt">ວັນທີຂາຍ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select formControlName="delivery" id="dl" class="form-select" placeholder="sale">
+                                    <option selected disabled value="null"> --- ກະລຸນາລະບຸການຈັດສົ່ງ --- </option>
+                                    <option value="ຈັດສົ່ງ">ຈັດສົ່ງ</option>
+                                    <option value="ຮັບໜ້າຮ້ານ">ຮັບໜ້າຮ້ານ</option>
+                                </select>
+                                <label for="dl">ການຈັດສົ່ງ ແລະ ການຮັບສິນຄ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <textarea formControlName="place_deli" id="pd" class="form-control" style="height: 100px;" placeholder="sale"></textarea>
+                                <label for="pd">ປ້ອນສະຖານທີ່ຈັດສົ່ງ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" formControlName="deliver_cost" id="dc" class="form-control font-eng" placeholder="sale">
+                                <label for="dc">ກະລຸນາປ້ອນຄ່າສົ່ງ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select formControlName="customer" id="c" class="form-select" placeholder="sale">
+                                    <option selected disabled value="null"> --- ກະລຸນາລະບຸລູກຄ້າ --- </option>
+                                    <option value="Common">ລູກຄ້າທົ່ວໄປ</option>
+                                    <option *ngFor="let item of userList;" value="{{item.cus_id}}">{{item.name}} {{item.surname}}</option>
+                                </select>
+                                <label for="c">ລູກຄ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select formControlName="employee" id="e" class="form-select" placeholder="sale">
+                                    <option selected disabled value="null"> --- ກະລຸນາລະບຸພະນັກງານຂາຍ --- </option>
+                                    <option *ngFor="let item of empList;" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                </select>
+                                <label for="e">ພະນັກງານຂາຍ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary" [disabled]="!updateSaleForm.valid">
+                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="reset" class="btn btn-warning">
+                                <i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="card-footer">
+            <div class="col-md-3 ms-auto">
+                <button class="btn btn-outline-primary" routerLink="/sale-manage">
+                    <i class="fa-solid fa-angles-left"></i>&nbsp;ກັບຄືນ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="modal fade" id="addproductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-primary" id="exampleModalLabel">ເພີ່ມຂໍ້ມູນສິນຄ້າ</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productForm" (submit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class=" form-floating">
+                                <input class="form-control font-eng" upperCase id="pro-barcode" type="text" formControlName="pro_id" placeholder="ລະຫັດສິນຄ້າ ຫຼື ເລກbarcode" />
+                                <label for="pro-barcode">ລະຫັດສິນຄ້າ ຫຼື ເລກ barcode</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" form-floating">
+                                <input class="form-control" id="pro-name" type="text" formControlName="name" placeholder="Name" />
+                                <label for="pro-name">ຊື່ສິນຄ້າ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input class="form-control font-eng" id="pro-price" type="number" placeholder="Price" formControlName="price"/>
+                                <label for="pro-price">ລາຄາ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class=" form-floating font-eng">
+                                <input class="form-control" id="pro-qty" type="number" placeholder="Qty" formControlName="stock_qty"/>
+                                <label for="pro-qty">ຈຳນວນ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="ລາຍລະອຽດສິນຄ້າ" id="desc" style="height: 100px" formControlName="description"></textarea>
+                                <label for="desc">ລາຍລະອຽດສິນຄ້າ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="cat" formControlName="type" >
+                                    <option class="text-muted" selected> --- ກະລຸນາເລືອກປະເພດສິນຄ້າ --- </option>
+                                    <option *ngFor="let item of typeList;" value="{{item.pt_id}}">{{item.name}}</option>
+                                </select>
+                                <label for="cat">ເລືອກປະເພດສິນຄ້າ</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="unit" formControlName="unit" >
+                                    <option class="text-muted" selected> --- ກະລຸນາເລືອກຫົວໜ່ວຍ --- </option>
+                                    <option *ngFor="let item of unitList;" value="{{item.symbol}}">{{item.name}}</option>
+                                </select>
+                                <label for="unit">ເລືອກຫົວໜ່ວຍ</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="file" #filePicker (change)="onImagePicked($event)"/>
+                            <button type="button" class="btn btn-secondary" (click)="filePicker.click()" >
+                                <i class="fas fa-image"></i>&nbsp;ເລືອກຮູບ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mx-auto">
+                            <div class="img-preview" *ngIf="imagePrev !== '' && imagePrev">
+                                <img [src]="imagePrev" [alt]="productForm.value.name" width="100%">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mt-3 mb-3">
+                        
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid" style="width: 100%;">
+                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="reset" class="btn btn-danger" style="width: 100%;">
+                                <i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                        
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

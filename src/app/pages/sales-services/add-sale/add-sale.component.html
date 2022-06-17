@@ -1,0 +1,229 @@
+<div class="container-fluid px-4">
+    <div class="card my-3 shadow">
+        <div class="card-header p-2">
+            <div class="d-flex justify-content-between">
+                <h4 class="my-1 text-center fw-bold text-primary">
+                    <i class="fas fa-cart-plus"></i>&nbsp;ຈັດການການຂາຍ
+                </h4>
+                <!-- Button trigger modal -->
+                <div>
+                    <button type="button" class="me-2 btn btn-outline-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalProduct">
+                        <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;ເລືອກສິນຄ້າ
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary fw-bold" routerLink="/sale-manage">
+                        <i class="fa-solid fa-eye"></i>&nbsp;ສະແດງຂໍ້ມູນການຂາຍ
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <fieldset class="border border-primary p-2 px-3 pb-3 rounded-3">
+                        <legend class="float-none w-auto p-2 h4 mb-0 text-primary">ເພີ່ມຂໍ້ມູນການຂາຍ</legend>
+                        <form [formGroup]="saleForm" (submit)="onSaveSaleData()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <input formControlName="invoice_no" id="invno" type="text" class="form-control font-eng" placeholder="sale" readonly>
+                                        <label for="invno">ເລກບິນການຂາຍ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select formControlName="sale_type" id="st" class="form-select" placeholder="sale">
+                                            <option selected disabled value="null">ກະລຸນາລະບຸ</option>
+                                            <option value="POS">ຂາຍໜ້າຮ້ານ</option>
+                                            <option value="Online">ຂາຍອອນລາຍ</option>
+                                        </select>
+                                        <label for="st">ປະເພດການຂາຍ</label>
+                                    </div>
+                                </div>
+                                <div class="ps-lg-0 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select formControlName="cash" id="cs" class="form-select" placeholder="sale">
+                                            <option selected disabled value="null">ລະບຸການຈ່າຍເງິນ</option>
+                                            <option value="ຈ່າຍເງິນສົດ">ຈ່າຍເງິນສົດ</option>
+                                            <option value="ຈ່າຍໂອນ">ຈ່າຍໂອນ</option>
+                                        </select>
+                                        <label for="cs">ການຈ່າຍເງິນ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="date" formControlName="date" id="dt" class="form-control font-eng" placeholder="sale">
+                                        <label for="dt">ວັນທີຂາຍ</label>
+                                    </div>
+                                </div>
+                                <div class="ps-lg-0 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select formControlName="delivery" id="dl" class="form-select" placeholder="sale">
+                                            <option selected disabled value="null">ລະບຸການຈັດສົ່ງ</option>
+                                            <option value="ບໍ່ມີຈັດສົ່ງ">ບໍ່ມີ</option>
+                                            <option value="ຈັດສົ່ງ">ຈັດສົ່ງ</option>
+                                            <option value="ຮັບໜ້າຮ້ານ">ຮັບໜ້າຮ້ານ</option>
+                                        </select>
+                                        <label for="dl">ການຈັດສົ່ງ</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <select formControlName="customer" id="c" class="form-select" placeholder="sale">
+                                            <option selected disabled value="null"> --- ກະລຸນາລະບຸລູກຄ້າ --- </option>
+                                            <option *ngFor="let item of userList;" value="{{item.cus_id}}">{{item.name}}</option>
+                                        </select>
+                                        <label for="c">ລູກຄ້າ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <select formControlName="employee" id="e" class="form-select" placeholder="sale">
+                                            <option selected disabled value="null"> --- ກະລຸນາລະບຸພະນັກງານຂາຍ --- </option>
+                                            <option *ngFor="let item of empList;" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                        </select>
+                                        <label for="e">ພະນັກງານຂາຍ</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary w-100" [disabled]="saleForm.invalid">
+                                        <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                                    </button>
+                                </div>
+                                <div class="ps-lg-0 col-md-6">
+                                    <button type="reset" class="btn btn-warning w-100">
+                                        <i class="fas fa-circle-xmark"></i>&nbsp;ຍົກເລີກ
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+                <div class="col-md-8 ps-lg-0">
+                    <fieldset class="border border-primary p-2 px-3 pb-3 rounded-3">
+                        <legend class="float-none w-auto p-2 h4 mb-0 text-primary">ລາຍການສິນຄ້າ</legend>
+
+                        <div class="row justify-content-start">
+                            <div class="col-md-5 col-lg-4 col-xl-5 text-right">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th width="15%" class="ps-0 pt-0 fw-bold">ເລກທີບິນ:</th>
+                                            <td width="20%" class="ps-0 pt-0">{{saleId}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:30%;">ສິນຄ້າ</th>
+                                        <th style="width:30%;">ລາຄາ</th>
+                                        <th style="width:15%;">ຈຳນວນ</th>
+                                        <th style="width:25%;">ລວມ</th>
+                                        <th style="width:5%;">Option</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of saleItems;">
+                                        <td style="width:30%;">{{item.name}}</td>
+                                        <td class="font-eng" style="width:30%;">{{item.price | number:'1.0-0'}} LAK</td>
+                                        <td class="ps-2 font-eng" style="width: 15%;">
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-primary fw-bold" (click)="decrease(item.pro_id, item.qty)">
+                                                    <i class="fas fa-circle-minus"></i>
+                                                </button>
+                                                <span class="my-0 py-1 mx-2 font-eng">{{item.qty}}</span>
+                                                <button class="btn btn-sm btn-primary fw-bold" (click)="increase(item.pro_id, item.qty)">
+                                                    <i class="fas fa-circle-plus"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="font-eng" style="width:25%;">{{item.price * item.qty | number:'1.0-0'}} LAK</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger w-100" (click)="removeItem(item.pro_id)">
+                                                <i class="fas fa-xmark"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row justify-content-end">
+                            <div class="col-md-5 col-lg-4 col-xl-5 text-right">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th class="ps-0 fw-bold">ລວມທັງໝົດ:</th>
+                                            <td class="font-eng">{{grandTotal | number: '1.0-0'}} LAK</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-primary" style="width: 180px;" (click)="onSaveSaleDetail(saleItems)">
+                    <i class="fas fa-floppy-disk"></i> ບັນທຶກລາຍການ
+                </button>
+                <button type="button" class="ms-2 btn btn-danger" style="width: 180px;" (click)="emptyItems()">
+                    <i class="fas fa-trash-alt"></i> ລ້າງລາຍການ
+                </button>
+                <button type="button" class="ms-2 btn btn-warning" style="width: 180px;" onclick="window.location.reload(true)">
+                    <i class="fa-solid fa-arrows-rotate"></i> ໂຫຼດຄືນໃໝ່
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary" id="exampleModalLabel">ລາຍການສິນຄ້າທັງໝົດ</h4>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="table-responsive">
+                        <table *ngIf="productList.length" class="table" datatable>
+                            <thead>
+                                <tr>
+                                    <th>ສິນຄ້າ</th>
+                                    <th>ລາຍການ</th>
+                                    <th>ລາຄາ</th>
+                                    <th width="17%">ດຳເນີນການ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of productList;">
+                                    <td>
+                                        <img [src]="item.image" alt="{{item.name}}" class="img-fluid" width="90px">
+                                    </td>
+                                    <td>{{item.name}}</td>
+                                    <td class="font-eng">{{item.price | number}} LAK</td>
+                                    <td width="17%">
+                                        <button class="btn btn-outline-info text-dark" (click)="chooseItem(item)">
+                                            <i class="fas fa-circle-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

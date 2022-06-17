@@ -1,0 +1,138 @@
+<div class="container-fluid px-4">
+    <div class="row mt-4">
+        <div class="col-lg-8 col-md-12">
+            <div class="card shadow mb-3">
+                <div class="card-header bg-light">
+                    <button type="button" class="btn btn-outline-primary" routerLink="/order-detail">
+                        <i class="fas fa-angles-left"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <fieldset class="border border-primary px-3 pb-2 rounded-3">
+                        <legend class="float-none w-auto p-2 h3 text-primary">ຂໍ້ມູນການສັ່ງຊື້</legend>
+
+                        <table *ngIf="orderService.orders" datatable [dtOptions]="dtOptions" class="table table-hover table-striped">
+                            <thead class="bg-secondary text-light">
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                    <th>ສະຖານະ</th>
+                                    <th>ວັນທີສັ່ງຊື້</th>
+                                    <th>ຜູ້ສະໜອງ</th>
+                                    <th>ພະນັກງານຜູ້ຊື້</th>
+                                    <th>Option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderService.orders; let i=index">
+                                    <td class="font-eng">{{i+1}}.</td>
+                                    <td class="font-eng">{{item.order_no}}</td>
+                                    <td> {{item.status}} </td>
+                                    <td class="font-eng">{{item.date | date:'dd/MM/yyyy'}}</td>
+                                    <td class="font-eng">{{item.supplier}}</td>
+                                    <td class="font-eng">{{item.employee}}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-success" routerLink="/order/{{item.order_no}}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" (click)="onEdit(item)">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" (click)="onDelete(item._id, orderForm)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table *ngIf="!orderService.orders" class="table table-hover table-striped">
+                            <thead class="bg-secondary text-light">
+                                <tr role="row">
+                                    <th>#</th>
+                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                    <th>ສະຖານະ</th>
+                                    <th>ວັນທີສັ່ງຊື້</th>
+                                    <th>ພະນັກງານຜູ້ຊື້</th>
+                                    <th>ຜູ້ສະໜອງ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">ບໍ່ມີຂໍ້ມູນ | No data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </fieldset>
+                </div>
+                <div class="card-footer">
+                    <div class="text-end">
+                        <button class="btn btn-danger" routerLink="/rep-order">
+                            <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <fieldset class="border border-primary px-3 pb-2 rounded-3">
+                        <legend class="float-none w-auto p-2 h3 text-primary">ແກ້ໄຂຂໍ້ມູນການສັ່ງຊື້</legend>
+                        <form (ngSubmit)="onSubmit(orderForm)" #orderForm="ngForm">
+                            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="orderService.selectedOrder._id">
+                            <div class="form-floating">
+                                <input id="ono" type="text" name="order_no" #order_no="ngModel" [(ngModel)]="orderService.selectedOrder.order_no" class="form-control font-eng" placeholder="order" readonly>
+                                <label for="ono">ເລກທີໃບສັ່ງຊື້</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <select name="status" id="sts" class="form-select" #status="ngModel" [(ngModel)]="orderService.selectedOrder.status" required>
+                                    <option disabled selected value="null"> --- ລະບຸສະຖານະ --- </option>
+                                    <option value="ບໍ່ອະນຸມັດ">ບໍ່ອະນຸມັດ</option>
+                                    <option value="ຖ້າອະນຸມັດ">ລໍຖ້າການອະນຸມັດ</option>
+                                    <option value="ອະນຸມັດ">ອະນຸມັດການສັ່ງຊື້</option>
+                                </select>
+                                <label for="sts">ກະລຸນາລະບຸສະຖານະ</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input *ngIf="!isSwap" type="date" name="date" #date="ngModel" [(ngModel)]="orderService.selectedOrder.date" id="dt" class="form-control font-eng" required>
+                                <input *ngIf="isSwap" type="date" name="date" #date="ngModel" [(ngModel)]="orderService.selectedOrder.date" id="dt" class="form-control font-eng" readonly>
+                                <label for="dt">ວັນທີສັ່ງຊື້</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <select *ngIf="!isSwap" name="supplier" id="sup" class="form-select" #supplier="ngModel" [(ngModel)]="orderService.selectedOrder.supplier" required>
+                                    <option disabled selected value="null"> --- ເລືອກຜູ້ສະໜອງ --- </option>
+                                    <option *ngFor="let item of supplierList" value="{{item.sup_id}}">{{item.name}}</option>
+                                </select>
+                                <input *ngIf="isSwap" type="text" class="form-control font-eng" name="supplier" id="sup" #supplier="ngModel" [(ngModel)]="orderService.selectedOrder.supplier" readonly>
+                                <label for="sup">ກະລຸນາລະບຸຜູ້ສະໜອງ</label>
+                            </div>
+
+                            <div class="form-floating mt-3">
+                                <select *ngIf="!isSwap" name="employee" id="emp" class="form-select" #employee="ngModel" [(ngModel)]="orderService.selectedOrder.employee" required>
+                                    <option disabled selected value="null"> --- ລະບຸພະນັກງານ --- </option>
+                                    <option *ngFor="let item of empList" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                </select>
+                                <input *ngIf="isSwap" type="text" class="form-control font-eng" name="employee" id="emp" #employee="ngModel" [(ngModel)]="orderService.selectedOrder.employee" readonly>
+                                <label for="emp">ກະລູນາລະບຸພະນັກງານ</label>
+                            </div>
+                            <div class="my-3">
+                                <button type="submit" class="btn btn-warning" style="width: 120px;" [disabled]="!orderForm.valid">
+                                    <i class="fas fa-edit"></i>&nbsp;ແກ້ໄຂຂໍ້ມູນ
+                                </button>
+                                &nbsp;
+                                <button type="reset" class="btn btn-danger" style="width: 120px;" (click)="resetForm(orderForm)">
+                                    <i class="fa-solid fa-ban"></i>&nbsp;ຍົກເລີກ
+                                </button>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

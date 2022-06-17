@@ -1,0 +1,7 @@
+.card-body{
+    height: 530px;
+    overflow-y: auto;
+}
+td{
+    vertical-align: baseline;
+}

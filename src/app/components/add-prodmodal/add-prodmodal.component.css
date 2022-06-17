@@ -1,0 +1,9 @@
+.preview {
+    max-width: 100%;
+}
+input[type="file"]{
+    display: none;
+}
+.btn.btn-lg.btn-secondary {
+    width: 100%;
+}

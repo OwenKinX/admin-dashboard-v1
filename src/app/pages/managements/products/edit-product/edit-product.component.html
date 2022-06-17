@@ -1,0 +1,120 @@
+<div class="container-fluid px-4">
+    <div class="bg-gray rounded shadow">
+        <div class="col-md-2 p-2 ms-auto">
+            <button class="btn btn-outline-primary fw-bold" routerLink="/list-product">
+                <i class="fas fa-angles-left"></i>&nbsp;ກັບຄືນ
+            </button>
+        </div>
+    </div>
+    <div class="card my-3 shadow">
+        <div class="card-body bg-light">
+
+            <fieldset class="border border-primary p-2 px-4 pb-4 rounded-3">
+                <legend class="float-none w-auto p-2 h3 text-primary">ແກ້ໄຂຂໍ້ມູນສິນຄ້າ</legend>
+                <form [formGroup]="updateProductForm" (submit)="onUpdate()">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class=" form-floating">
+                                        <input class="form-control font-eng" upperCase id="pro-barcode" type="text" formControlName="pro_id" placeholder="ລະຫັດສິນຄ້າ ຫຼື ເລກbarcode" readonly/>
+                                        <label for="pro-barcode">ລະຫັດສິນຄ້າ ຫຼື ເລກ barcode</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class=" form-floating">
+                                        <input class="form-control" id="pro-name" type="text" formControlName="name" placeholder="Name" />
+                                        <label for="pro-name">ຊື່ສິນຄ້າ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control font-eng" id="pro-price" type="number" placeholder="Price" formControlName="price"/>
+                                        <label for="pro-price">ລາຄາ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control font-eng" id="pro-qty" type="number" placeholder="Qty" formControlName="stock_qty"/>
+                                        <label for="pro-qty">ຈຳນວນ</label>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="ລາຍລະອຽດສິນຄ້າ" id="desc" style="height: 100px" formControlName="description"></textarea>
+                                        <label for="desc">ລາຍລະອຽດສິນຄ້າ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select formControlName="type" id="type" class="form-select">
+                                            <option class="text-muted" selected> --- ກະລຸນາເລືອກປະເພດສິນຄ້າ --- </option>
+                                            <option *ngFor="let item of typeList;" value="{{item.pt_id}}">{{item.name}}</option>
+                                        </select>
+                                        <label for="type">ເລືອກປະເພດສິນຄ້າ</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select formControlName="unit" id="unit" class="form-select">
+                                            <option class="text-muted" selected> --- ກະລຸນາເລືອກຫົວໜ່ວຍ --- </option>
+                                            <option *ngFor="let item of unitList;" value="{{item.symbol}}">{{item.name}}</option>
+                                        </select>
+                                        <label for="unit">ເລືອກຫົວໜ່ວຍ</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <div *ngIf="!imagePrev" class="img-preview">
+                                        <img [src]="updateProductForm.value.image" onerror="this.src='assets/images/box.webp'" [alt]="updateProductForm.value.name" width="100%" />
+                                    </div>
+                                    <div class="img-preview" *ngIf="imagePrev !== '' && imagePrev">
+                                        <img [src]="imagePrev" [alt]="updateProductForm.value.name" width="100%">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <input type="file" #filePicker (change)="onImagePicked($event)"/>
+                                    <button type="button" class="btn btn-secondary" (click)="filePicker.click()" >
+                                        <i class="fas fa-image"></i>&nbsp;ເລືອກຮູບ
+                                    </button>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                    <div class="row mt-3 mb-3">
+                            
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-warning" [disabled]="!updateProductForm.valid" style="width: 100%;">
+                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="reset" class="btn btn-danger" style="width: 100%;">
+                                <i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ
+                            </button>
+                        </div>
+                        
+                    </div>
+    
+                </form>
+            </fieldset>
+            
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</div>

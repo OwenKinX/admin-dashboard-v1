@@ -1,1 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ngx-spinner/animations/ball-scale-multiple.css";
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    /* display: none; */
+}
+
+/* Track */
+::-webkit-scrollbar-track { 
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #919191; 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #2b78d0;
+    transition: all .8s;
+}
+
+@font-face {
+    font-family: NotoSansLao;
+    src: url('./public/fonts/NotoSansLaoUI-Regular.ttf');
+    font-family: Saysettha;
+    src: url('./public/fonts/saysettha_web.ttf');
+}
+*{
+    font-family: NotoSansLao;
+}
+.font-lao{
+    font-family: Saysettha;
+}
+#layoutSidenav{
+    background-color: #dfe6ee;
+}
+
+.font-eng{
+    font-family: 'Times New Roman', Times, serif;
+}
+.navbar{
+    background-color: #333;
+}
+.nav-link{
+    margin: 0 5px;
+    cursor: pointer;
+}
+.nav-link:hover{
+    border-radius: 5px;
+    background: rgba(2, 2, 2, 0.2);
+}
+.dropdown:hover>.dropdown-menu{
+    display: block;
+}
+.dropdown-menu-end{
+    right: 0;
+    left: auto;
+}
+footer{
+    background-color: #435462;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /* position: fixed; */
+}
+.bg-gray{
+    background-color: #f6f3f3;
+    margin: 20px 0;
+}
+.toggler:hover {
+    background: rgba(43, 43, 43, 0.5);
+}

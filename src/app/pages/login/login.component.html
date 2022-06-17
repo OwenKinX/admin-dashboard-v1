@@ -1,0 +1,59 @@
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5 col-md-8 col-sm-12">
+                            <div class="card shadow border-primary mt-5">
+                                <div class="card-header">
+                                    <div class="card-tile">
+                                        <h3 class="text-center text-primary my-3 fw-bold">ເຂົ້າສູ່ລະບົບ | Login</h3>
+                                    </div>
+                                    <!-- <img class="img-logo" src="../../../assets/images/logo.png" alt="" width="100px" > -->
+                                </div>
+                                <div class="card-body">
+                                    <!-- <div class="card-tile">
+                                        <h3 class="text-center text-primary my-3 fw-bold">ເຂົ້າສູ່ລະບົບ</h3>
+                                    </div> -->
+                                    <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa-solid fa-envelope text-primary mx-auto"></i></span>
+                                            <input class="form-control form-control-lg" ngModel name="email" #emailInput="ngModel" id="inputUsername" type="email" placeholder="ກະລຸນາປ້ອນອີເມວ" required email/>
+                                        </div>
+                                        <div class="form-text mb-3">ຕົວຢ່າງ: example@email.com</div>
+                                        
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="fas fa-lock text-primary mx-auto"></i></span>
+                                            <input class="form-control form-control-lg" ngModel name="password" #passwordInput="ngModel" id="inputPassword" type="password" placeholder="ກະລຸນາປ້ອນລະຫັດຜ່ານ" minlength="8" required />
+                                        </div>
+                                        
+                                        <div class="row justify-content-between">
+                                            <div class="col-md-8">
+                                                <!-- <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                    <label class="form-check-label" for="flexCheckDefault">ຈື່ຂ້ອຍໄວ້ໃນລະບົບ</label>
+                                                </div> -->
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" onclick="myFunction()">
+                                                    <label class="form-check-label" for="flexCheckDefault">ສະແດງລະຫັດຜ່ານ</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between mt-3 mb-0">
+                                            <a type="submit" routerLink="/change-password">ລືມລະຫັດຜ່ານ?</a>
+                                            <button type="submit" class="btn btn-lg btn-primary" [disabled]="!loginForm.valid">ເຂົ້າສູ່ລະບົບ <i class="fa-solid fa-right-to-bracket"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center py-3">
+                                    <div class="small">ຖ້າທ່ານຍັງບໍ່ມີບັນຊີ >><a href="" class="text-primary" routerLink="/register"> ລົງທະບຽນ</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>

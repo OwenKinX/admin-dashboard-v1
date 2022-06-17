@@ -1,0 +1,11 @@
+#prev-section{
+    height: 420px;
+    overflow: auto;
+}
+.card-body{
+    height: 540px;
+    overflow-y: auto;
+}
+tr,th,td{
+    font-size: 14px;
+}

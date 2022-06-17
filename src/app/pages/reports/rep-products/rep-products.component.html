@@ -1,0 +1,165 @@
+<div class="container-fluid px-4">
+
+    <div class="alert alert-light shadow mt-3">
+        <form>
+            <div class="d-flex">
+                <div class="col-md-4 text-end">
+                    <h4 class="mt-1 mb-0">ພິມລາຍງານຕາມປະເພດສິນຄ້າ</h4>
+                </div>
+                <div class="ps-lg-2 col-md-3">
+                    <select class="form-select" #selectPType>
+                        <option class="text-center" selected disabled> -- ເລືອກປະເພດສິນຄ້າ -- </option>
+                        <option *ngFor="let type of producttypes;" [value]="type.pt_id">{{type.name}}</option>
+                    </select>
+                </div>
+                <div class="ps-lg-2 col-md-2">
+                    <button class="btn btn-warning w-100" (click)="reportByType(selectPType.value)">
+                        <i class="fas fa-search"></i> ສ້າງລາຍງານ
+                    </button>
+                </div>
+                <div class="ps-lg-2 col-md-3">
+                    <button type="reset" class="btn btn-primary" (click)="displayReports()">
+                        <i class="fas fa-file-lines"></i> ສະແດງລາຍງານທັງໝົດ
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card my-3 shadow">
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="mt-1 mb-0 text-primary">ລາຍງານຂໍ້ມູນສິນຄ້າ</h4>
+            <div>
+                <button class="btn btn-secondary" routerLink="/list-product">
+                    <i class="fas fa-eye"></i>&nbsp;ສະແດງຂໍ້ມູນທັງໝົດ
+                </button>
+                &nbsp;
+                <button class="btn btn-danger" (click)="exportPDF()">
+                    <i class="fas fa-file-pdf"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-success" (click)="exportExcel()">
+                    <i class="fas fa-file-excel"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Preview section -->
+        <div class="card-body" id="prev-section">
+            <div id="productTable" #productTable>
+                <table class="table table-bordered" id="product-table">
+                    <thead class="bg-light">
+                        <tr class="text-primary">
+                            <th width="80px">ລ/ດ</th>
+                            <th>ສິນຄ້າ</th>
+                            <th>ຊື່ສິນຄ້າ</th>
+                            <th>ລາຄາ</th>
+                            <th>ຈຳນວນໃນສຕັອກ</th>
+                            <th>ປະເພດ</th>
+                            <th>ລວມ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of productReportList; let i=index;">
+                            <td width="80px" class="font-eng">{{i+1}}</td>
+                            <td width="140px">
+                                <img src="{{item.image}}" alt="product-image" width="100%">
+                            </td>
+                            <td>{{item.name}}</td>
+                            <td class="font-eng">{{item.price | number}} LAK</td>
+                            <td class="font-eng" width="150px">{{item.stock_qty}}</td>
+                            <td>{{item.type}}</td>
+                            <td class="font-eng">{{item.total | number}} LAK</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-light">
+                        <tr class="text-primary">
+                            <td colspan="6" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
+                            <td *ngIf="!productGrandTotal.length" class="text-center fw-bold font-eng">0</td>
+                            <td *ngFor="let sum of productGrandTotal" class="text-center fw-bold font-eng">{{sum.productGrandTotal | number}} LAK</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-end">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#productModal">
+                    <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title" id="exampleModalLabel"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="print-section">
+                        <div class="mt-3 mb-5 text-center">
+                            <img src="assets/images/logo.png" width="100px" alt="ຮູບໂລໂກ້ຮ້ານ">
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-sm-8 font-lao">
+                                <h5 class="text-primary">ຮ້ານ SS ຊີ້ນສະໄລ້ ແລະ ອາຫານແຊ່ແຂງ</h5>
+                                ບ.ດົງຄຳຊ້າງ, ມ.ຫາດຊາຍຟອງ, ນະຄອນຫຼວງວຽງຈັນ<br>
+                                ເບີໂທ 020 56888815
+                            </div>
+                            <div class="col-sm-4 font-lao text-end">
+                                ວັນທີ: {{ dateTime | date: 'dd/MM/yyyy' }}<br>
+                                ເວລາ: {{ dateTime | date: 'HH:mm:ss' }}
+                            </div>
+                        </div>
+                        <div class="my-4">
+                            <p class="font-lao" style="text-align:center; font-weight:bold; font-size: 20px;">ລາຍງານຂໍ້ມູນສິນຄ້າ</p>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="font-lao">ລ/ດ</th>
+                                    <th class="font-lao">ສິນຄ້າ</th>
+                                    <th class="font-lao">ຊື່ສິນຄ້າ</th>
+                                    <th class="font-lao">ລາຄາ</th>
+                                    <th class="font-lao">ຈຳນວນໃນສຕັອກ</th>
+                                    <th class="font-lao">ລວມ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of productReportList; let i=index;">
+                                    <td class="font-eng">{{i+1}}</td>
+                                    <td width="180px">
+                                        <img src="{{item.image}}" alt="product-image" width="100%">
+                                    </td>
+                                    <td>{{item.name}}</td>
+                                    <td class="font-eng">{{item.price | number}} LAK</td>
+                                    <td class="font-eng" width="150px">{{item.stock_qty}}</td>
+                                    <td class="font-eng">{{item.total | number}} LAK</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
+                                    <td *ngFor="let sum of productGrandTotal" class="text-center fw-bold font-eng">{{sum.productGrandTotal | number}} LAK</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="row justify-content-end">
+                            <div class="col-sm-3">
+                                <p class="fw-bold font-lao mb-5">ລາຍເຊັນ<br><br>.....................................</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="printDiv('print-section')" data-bs-dismiss="modal">
+                        <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
