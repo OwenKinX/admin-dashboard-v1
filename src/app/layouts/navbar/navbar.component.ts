@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,6 +13,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false
   private authListenerSubs:Subscription;
 
+  adminId:any;
+
   constructor( private authService:AuthService ) { }
 
   ngOnInit(): void {
@@ -19,6 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
     });
+    this.adminId = sessionStorage.getItem('admin');
   }
 
   ngOnDestroy(): void {

@@ -73,6 +73,10 @@ export class ProductsService {
     }>(`${this.api_url}/product/${_id}`);
   }
 
+  getProductInfo( _id:string ){
+    return this.http.get<any>(`${this.api_url}/products/info?id=${_id}`)
+  }
+
   updateProduct(
     _id:string,
     pro_id:string,

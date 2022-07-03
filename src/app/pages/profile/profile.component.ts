@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,15 +8,34 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
   currentAdmin: Object = {};
+
+  getId:any;
+  adminProfile:any;
+
+  username:string;
+  name:string;
+  email:string;
+  tel:number;
+  _id:string;
+
   constructor(
-    public authService:AuthService,
-    private actRoute:ActivatedRoute
+    public authService:AuthService
   ) { 
     
   }
 
   ngOnInit(): void {
-    this
+    this.getId = sessionStorage.getItem('admin')
+    this.authService.getAdminProfile(this.getId).subscribe( admin => {
+      // this.adminProfile = [admin];
+      this.adminProfile = admin;
+
+      this.username = admin.username;
+      this.name = admin.name;
+      this.email = admin.email;
+      this.tel = admin.phone;
+      this._id = admin._id
+    });
   }
 
 }

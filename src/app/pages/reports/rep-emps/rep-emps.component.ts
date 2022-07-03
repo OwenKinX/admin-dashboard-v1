@@ -4,6 +4,7 @@ import { PositionService } from '../../managements/positions/emp-position.servic
 import * as XLSX from 'xlsx';
 import { jsPDF } from "jspdf";
 import { timer } from 'rxjs';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-rep-emps',
@@ -12,12 +13,12 @@ import { timer } from 'rxjs';
 })
 export class RepEmpsComponent implements OnInit {
 
-  @ViewChild('empTable',{static:false}) el!: ElementRef;
+  @ViewChild('empTable') empTable!:ElementRef;
 
   empReportList:any = [];
   positions:any=[];
 
-  fileName:string = 'EmployeesSheets.xlsx';
+  fileName:string = 'EmployeesSheets';
   fileNameLao:string = 'ລາຍງານຂໍ້ມູນພະນັກງານ';
   dateTime:Date;
 
@@ -43,15 +44,19 @@ export class RepEmpsComponent implements OnInit {
     const wb:XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}`);
+    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}.xlsx`);
   }
 
   exportPDF(){
-    let pdf = new jsPDF();
-    pdf.html(this.el.nativeElement, {
-      callback:(pdf) => {
-        pdf.save(`${Date.now()}-ລາຍງານຂໍ້ມູນພະນັກງານ.pdf`)
-      }
+    let DATA = document.getElementById('empTable');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 0, position, fileWidth, fileHeight);
+      PDF.save(`${Date.now()}-${this.fileNameLao}.pdf`);
     })
   }
 

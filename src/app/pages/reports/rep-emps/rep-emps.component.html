@@ -1,27 +1,29 @@
 <div class="container-fluid px-4">
-    <form>
-        <div class="row mt-3 justify-content-end">
-            <div class="col-md-4 text-end">
-                <h4 class="mt-1 mb-0">ເລືອກພິມລາຍງານຕາມຕຳແໜ່ງ</h4>
+    
+    <div class="alert alert-secondary mt-3 shadow">
+        <form>
+            <div class="row justify-content-end">
+                <div class="col-md-4 text-end">
+                    <h4 class="mt-1 mb-0">ພິມລາຍງານຕາມຕຳແໜ່ງ</h4>
+                </div>
+                <div class="ps-lg-0 col-md-2">
+                    <select class="form-select" #selectPositon>
+                        <option selected disabled> -- ເລືອກຕຳແໜ່ງ -- </option>
+                        <option *ngFor="let ep of positions;" [value]="ep.ep_id">{{ep.name}}</option>
+                    </select>
+                </div>
+                <div class="ps-lg-0 col-md-6">
+                    <button type="button" class="btn btn-outline-warning text-dark fw-bold" (click)="reportByPosition(selectPositon.value)">
+                        <i class="fas fa-search"></i> ສ້າງລາຍງານ
+                    </button>
+                    &nbsp;
+                    <button type="reset" class="btn btn-outline-primary fw-bold" (click)="displayEmpReport()">
+                        <i class="fas fa-file-lines"></i> ສະແດງລາຍງານທັງໝົດ
+                    </button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <select class="form-select" #selectPositon>
-                    <option class="text-center" selected disabled> -- ເລືອກຕຳແໜ່ງ -- </option>
-                    <option *ngFor="let ep of positions;" [value]="ep.ep_id">{{ep.name}}</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-warning w-100" (click)="reportByPosition(selectPositon.value)">
-                    <i class="fas fa-search"></i> ສ້າງລາຍງານ
-                </button>
-            </div>
-            <div class="col-md-3">
-                <button type="reset" class="btn btn-primary" (click)="displayEmpReport()">
-                    <i class="fas fa-file-lines"></i> ສະແດງລາຍງານທັງໝົດ
-                </button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <div class="card my-3 shadow">
         <div class="card-header d-flex justify-content-between">
@@ -49,7 +51,7 @@
                             <th>ລ/ດ</th>
                             <th>ລະຫັດພະນັກງານ</th>
                             <th>ຊື່ ແລະ ນາມສະກຸນ</th>
-                            <th>ເບີໂທ</th>
+                            <th>ເບີຕິດຕໍ່</th>
                             <th>ທີ່ຢູ່ປັດຈຸບັນ</th>
                             <th>ຕຳແໜ່ງ</th>
                         </tr>
@@ -63,19 +65,17 @@
                             <td>ບ.{{item.village}}, ມ.{{item.district}}, {{item.province}}</td>
                             <td>{{item.position}}</td>
                         </tr>
-                    </tbody>
-                    <tfoot class="bg-light">
-                        <tr class="text-primary">
+                        <tr class="bg-light text-primary">
                             <td colspan="5" class="text-end fw-bold">ຈຳນວນພະນັກງານທັງໝົດ</td>
                             <td class="text-center fw-bold font-eng">{{empReportList.length}}</td>
                         </tr>
-                    </tfoot>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#empModal">
+                <button type="button" class="btn btn-outline-warning text-dark fw-bold" data-bs-toggle="modal" data-bs-target="#empModal">
                     <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
                 </button>
             </div>
@@ -87,10 +87,10 @@
             <div class="modal-content">
                 <div class="modal-header bg-info">
                     <h4 class="modal-title m-0 p-0" id="exampleModalLabel">ລາຍງານ</h4>
-                    <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="print-section">
+                    <div id="printSection">
                         <div class="mt-3 mb-5 text-center">
                             <img src="assets/images/logo.png" width="100px" alt="ຮູບໂລໂກ້ຮ້ານ">
                         </div>
@@ -115,7 +115,7 @@
                                     <th class="font-lao">ລ/ດ</th>
                                     <th class="font-lao">ລະຫັດພະນັກງານ</th>
                                     <th class="font-lao">ຊື່ ແລະ ນາມສະກຸນ</th>
-                                    <th class="font-lao">ເບີໂທ</th>
+                                    <th class="font-lao">ເບີຕິດຕໍ່</th>
                                     <th class="font-lao">ທີ່ຢູ່ປັດຈຸບັນ</th>
                                     <th class="font-lao">ຕຳແໜ່ງ</th>
                                 </tr>
@@ -129,13 +129,11 @@
                                     <td class="font-lao">ບ.{{item.village}}, ມ.{{item.district}}, {{item.province}}</td>
                                     <td class="font-lao">{{item.position}}</td>
                                 </tr>
-                            </tbody>
-                            <tfoot>
                                 <tr>
                                     <td colspan="5" class="text-end fw-bold font-lao">ຈຳນວນພະນັກງານທັງໝົດ</td>
                                     <td class="text-center fw-bold font-eng">{{empReportList.length}}</td>
                                 </tr>
-                            </tfoot>
+                            </tbody>
                         </table>
 
                         <div class="row justify-content-end">
@@ -148,8 +146,8 @@
                 </div>
                 <div class="modal-footer p-2">
                     <div class="text-end">
-                        <button class="btn btn-primary" onclick="printDiv('print-section')">
-                            <i class="fas fa-arrow-alt-circle-down"></i>&nbsp;ນຳລາຍງານອອກ
+                        <button class="btn btn-outline-primary fw-bold" [useExistingCss]="true" printSectionId="printSection" ngxPrint data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-print"></i>&nbsp;ນຳລາຍງານອອກ
                         </button>
                     </div>
                 </div>

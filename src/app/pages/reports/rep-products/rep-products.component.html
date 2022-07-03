@@ -2,23 +2,30 @@
 
     <div class="alert alert-light shadow mt-3">
         <form>
-            <div class="d-flex">
-                <div class="col-md-4 text-end">
-                    <h4 class="mt-1 mb-0">ພິມລາຍງານຕາມປະເພດສິນຄ້າ</h4>
-                </div>
-                <div class="ps-lg-2 col-md-3">
-                    <select class="form-select" #selectPType>
-                        <option class="text-center" selected disabled> -- ເລືອກປະເພດສິນຄ້າ -- </option>
-                        <option *ngFor="let type of producttypes;" [value]="type.pt_id">{{type.name}}</option>
+            <div class="row justify-content-end">
+                
+                <div class="col-md-2">
+                    <select class="form-select" (change)="onSelectCat($event)">
+                        <option class="text-center" selected disabled> ເລືອກໝວດໝູ່ສິນຄ້າ </option>
+                        <option *ngFor="let cat of procategory;" [value]="cat.pc_id">{{cat.name}}</option>
                     </select>
                 </div>
-                <div class="ps-lg-2 col-md-2">
-                    <button class="btn btn-warning w-100" (click)="reportByType(selectPType.value)">
+                <div class="ps-lg-0 col-md-2">
+                    <select class="form-select" #selectPType>
+                        <option class="text-center" selected disabled> ເລືອກປະເພດສິນຄ້າ </option>
+                        <option *ngFor="let type of type_data;" [value]="type.pt_id">{{type.name}}</option>
+                    </select>
+                </div>
+                <div class="ps-lg-0 col-md-4">
+                    <button class="btn btn-outline-warning fw-bold text-dark" (click)="reportByType(selectPType.value)">
                         <i class="fas fa-search"></i> ສ້າງລາຍງານ
                     </button>
-                </div>
-                <div class="ps-lg-2 col-md-3">
-                    <button type="reset" class="btn btn-primary" (click)="displayReports()">
+                    &nbsp;
+                    <button type="reset" class="btn btn-outline-secondary fw-bold" (click)="onCancel()">
+                        <i class="fas fa-circle-xmark"></i> ຍົກເລີກ
+                    </button>
+                    &nbsp;
+                    <button type="reset" class="btn btn-outline-primary fw-bold" (click)="displayReports()">
                         <i class="fas fa-file-lines"></i> ສະແດງລາຍງານທັງໝົດ
                     </button>
                 </div>
@@ -54,37 +61,37 @@
                             <th>ສິນຄ້າ</th>
                             <th>ຊື່ສິນຄ້າ</th>
                             <th>ລາຄາ</th>
-                            <th>ຈຳນວນໃນສຕັອກ</th>
-                            <th>ປະເພດ</th>
+                            <th>ຈຳນວນ</th>
                             <th>ລວມ</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of productReportList; let i=index;">
                             <td width="80px" class="font-eng">{{i+1}}</td>
-                            <td width="140px">
+                            <td width="130px">
                                 <img src="{{item.image}}" alt="product-image" width="100%">
                             </td>
                             <td>{{item.name}}</td>
                             <td class="font-eng">{{item.price | number}} LAK</td>
                             <td class="font-eng" width="150px">{{item.stock_qty}}</td>
-                            <td>{{item.type}}</td>
                             <td class="font-eng">{{item.total | number}} LAK</td>
                         </tr>
-                    </tbody>
-                    <tfoot class="bg-light">
-                        <tr class="text-primary">
-                            <td colspan="6" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
-                            <td *ngIf="!productGrandTotal.length" class="text-center fw-bold font-eng">0</td>
-                            <td *ngFor="let sum of productGrandTotal" class="text-center fw-bold font-eng">{{sum.productGrandTotal | number}} LAK</td>
+                        <tr class="text-primary bg-light">
+                            <td colspan="4" class="text-end fw-bold">ຈຳນວນທັງໝົດ</td>
+                            <td class="fw-bold font-eng">{{grandQty | number}}</td>
+                            <td></td>
                         </tr>
-                    </tfoot>
+                        <tr class="text-primary bg-light">
+                            <td colspan="5" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
+                            <td class="fw-bold font-eng">{{grandTotal | number}} LAK</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#productModal">
+                <button type="button" class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#productModal">
                     <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
                 </button>
             </div>
@@ -95,11 +102,11 @@
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header bg-info">
-                    <h4 class="modal-title" id="exampleModalLabel"></h4>
+                    <h4 class="modal-title" id="exampleModalLabel">ລາຍງານ</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="print-section">
+                    <div id="printSection">
                         <div class="mt-3 mb-5 text-center">
                             <img src="assets/images/logo.png" width="100px" alt="ຮູບໂລໂກ້ຮ້ານ">
                         </div>
@@ -131,7 +138,7 @@
                             <tbody>
                                 <tr *ngFor="let item of productReportList; let i=index;">
                                     <td class="font-eng">{{i+1}}</td>
-                                    <td width="180px">
+                                    <td width="130px">
                                         <img src="{{item.image}}" alt="product-image" width="100%">
                                     </td>
                                     <td>{{item.name}}</td>
@@ -139,13 +146,16 @@
                                     <td class="font-eng" width="150px">{{item.stock_qty}}</td>
                                     <td class="font-eng">{{item.total | number}} LAK</td>
                                 </tr>
-                            </tbody>
-                            <tfoot>
                                 <tr>
-                                    <td colspan="5" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
-                                    <td *ngFor="let sum of productGrandTotal" class="text-center fw-bold font-eng">{{sum.productGrandTotal | number}} LAK</td>
+                                    <td colspan="4" class="text-end fw-bold">ຈຳນວນທັງໝົດ</td>
+                                    <td class="fw-bold font-eng">{{grandQty | number}}</td>
+                                    <td></td>
                                 </tr>
-                            </tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-end fw-bold font-lao">ມູນຄ່າລວມທັງໝົດ</td>
+                                    <td class="fw-bold font-eng font-lao">{{grandTotal | number}} LAK</td>
+                                </tr>
+                            </tbody>
                         </table>
                         <div class="row justify-content-end">
                             <div class="col-sm-3">
@@ -155,7 +165,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="printDiv('print-section')" data-bs-dismiss="modal">
+                    <button class="btn btn-outline-warning fw-bold text-dark" [useExistingCss]="true" printSectionId="printSection" ngxPrint data-bs-dismiss="modal" aria-label="Close">
                         <i class="fas fa-print"></i>&nbsp;ພິມລາຍງານ
                     </button>
                 </div>

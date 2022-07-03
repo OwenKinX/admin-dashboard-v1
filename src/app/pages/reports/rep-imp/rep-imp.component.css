@@ -1,14 +1,10 @@
-#prev-section{
-    height: 460px;
-    overflow: auto;
-}
 .card-body{
-    height: 540px;
+    height: 440px;
     overflow-y: auto;
 }
 tr,th,td{
     text-align: center;
-    font-size: 16px;
+    font-size: 15px;
 }
 td{
     vertical-align: baseline;

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdminData } from './admin-data';
 import { LoginData } from './login-data';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ export class AuthService {
 
   private isAuthenticated = false;
   private token:string;
-  private tokenTimer:any
+  private tokenTimer:any;
   private authStatusListener = new Subject<boolean>();
+
+  adminId:any;
 
   api_url:string = 'http://localhost:8001/admin';
   
@@ -59,9 +62,10 @@ export class AuthService {
       email: email,
       password: password
     }
-    this.http.post<{ password:string, token:string, expiresIn:number }>(`${this.api_url}/login`, loginData).subscribe(response => {
+    this.http.post<{ user:string, message:string, token:string, expiresIn:number }>(`${this.api_url}/login`, loginData).subscribe(response => {
       const token = response.token;
-      // if(loginData.password !== response.password){}
+      const id = response.user;
+      this.adminId = id;
       this.token = token;
       if(token){
         const expiresDuration = response.expiresIn;
@@ -70,10 +74,25 @@ export class AuthService {
         this.authStatusListener.next(true);
         const now = new Date();
         const expiresDate = new Date(now.getTime() + expiresDuration * 1000);
-        console.log(expiresDate);
-        this.saveAuthData(token, expiresDate);
+        this.saveAuthData(id, token, expiresDate);
         this.router.navigate(['home']);
       }
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: response.message,
+        showConfirmButton: false,
+        timer: 1000
+      })
+
+    }, error => {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: error.mesaage,
+        showConfirmButton: false,
+        timer: 1000
+      });
     });
   }
 
@@ -90,6 +109,18 @@ export class AuthService {
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
+  }
+
+  getAdminProfile(adminId:string){
+    return this.http.get<any>(`${this.api_url}/profile/${adminId}`)
+  }
+
+  updateAdminProfile(id:any, data:any){
+    return this.http.put<any>(`${this.api_url}/profile/update/${id}`, data);
+  }
+
+  updateAdminPassword(data:any){
+    return this.http.patch<any>(`${this.api_url}/update/password`, data)
   }
 
   logout(){
@@ -109,14 +140,16 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token:string, expiresDate:Date) {
+  private saveAuthData( id:string, token:string, expiresDate:Date) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiresIn', expiresDate.toUTCString());
+    sessionStorage.setItem('admin', id);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
+    sessionStorage.removeItem('admin');
   }
 
   private getAuthData() {

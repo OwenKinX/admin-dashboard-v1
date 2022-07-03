@@ -1,77 +1,117 @@
 <div class="container-fluid px-4">
     <div class="card my-3 shadow">
+        <div class="card-header d-flex justify-content-between">
+            <button class="btn btn-outline-warning fw-bold text-dark" onclick="window.location.reload()">
+                <i class="fas fa-rotate-right"></i>
+            </button>
+            <button type="button" class="btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#modalProduct">
+                <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;ເລືອກສິນຄ້າ
+            </button>
+        </div>
         <div class="card-body">
             <fieldset class="border border-primary p-2 px-4 pb-4 rounded-3">
-                <legend class="float-none w-auto p-2 h3 text-primary">ເພີ່ມຂໍ້ມູນການນຳເຂົ້າສິນຄ້າ</legend>
+                <legend class="float-none w-auto p-2 h4 text-primary">ເພີ່ມຂໍ້ມູນການນຳເຂົ້າສິນຄ້າ</legend>
                 <form [formGroup]="importForm" (submit)="onSubmit()">
                     <div class="row mt-1">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            
                             <div class="form-floating mb-3">
-                                <input formControlName="imp_no" id="imp" type="text" class="form-control font-eng" placeholder="import" readonly>
-                                <label for="imp">ເລກທີນຳເຂົ້າ</label>
+                                <input type="text" formControlName="imp_no" id="imp_no" class="form-control font-eng" placeholder="import" readonly>
+                                <label for="imp_no">ເລກທີນຳເຂົ້າ</label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="number" formControlName="c_price" id="cost" class="form-control font-eng" placeholder="import">
-                                <label for="cost">ລາຄານຳເຂົ້າ</label>
+                                <input type="date" formControlName="date" id="d" class="form-control font-eng" placeholder="import">
+                                <label for="d">ວັນທີນຳເຂົ້າ</label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="number" formControlName="imp_qty" id="qty" class="form-control font-eng" placeholder="import">
-                                <label for="qty">ຈຳນວນນຳເຂົ້າ</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input type="date" formControlName="date" id="dt" class="form-control font-eng" placeholder="import">
-                                <label for="dt">ວັນທີນຳເຂົ້າ</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-floating mb-3">
                                 <input type="text" formControlName="bill_no" id="bill" class="form-control font-eng" placeholder="import">
                                 <label for="bill">ເລກທີບິນຈາກຜູ້ສະໜອງ</label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <select formControlName="product" id="pro" class="form-select" placeholder="product">
-                                    <option disabled selected value="null"> --- ລະບຸສິນຄ້າທີ່ໄດ້ນຳເຂົ້າ --- </option>
-                                    <option *ngFor="let item of productList" value="{{item.pro_id}}">{{item.name}}</option>
-                                </select>
-                                <label for="pro">ສິນຄ້າທີ່ໄດ້ນຳເຂົ້າ</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <select formControlName="order" id="o" class="form-select" placeholder="import">
+                                <select formControlName="order_no" id="o" class="form-select" placeholder="import">
                                     <option disabled selected value="null"> --- ລະບຸເລກທີບິນສັ່ງຊື້ --- </option>
-                                    <option *ngFor="let item of orders" value="{{item.order_no}}">{{item.order_no}}</option>
+                                    <option *ngFor="let item of orders" value="{{item.order_no}}">{{item.order_no}}, {{item.date | date: 'dd/MM/YYYY'}}</option>
                                 </select>
-                                <label for="o">ເລກທີບິນນຳເຂົ້າ</label>
+                                <label for="o">ເລກທີບິນສັ່ງຊື້</label>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-floating mb-3">
                                 <select formControlName="employee" id="e" class="form-select" placeholder="import">
                                     <option disabled selected value="null"> --- ລະບຸພະນັກງານ --- </option>
-                                    <option *ngFor="let item of employees" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                    <option *ngFor="let item of employees" value="{{item.emp_id}}">{{item.emp_id}}, {{item.name}}</option>
                                 </select>
                                 <label for="e">ພະນັກງານຜູ້ນຳເຂົ້າ</label>
                             </div>
+                            <div class="row">
+                                <div class="pe-lg-1 col-md-6">
+                                    <button type="submit" class="btn btn-outline-primary fw-bold w-100" [disabled]="!importForm.valid">
+                                        <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                                    </button>
+                                </div>
+                                <div class="ps-lg-1 col-md-6">
+                                    <button type="reset" class="btn btn-outline-secondary fw-bold w-100" [disabled]="!importForm.valid">
+                                        <i class="fas fa-circle-xmark"></i>&nbsp;ຍົກເລີກ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ສິນຄ້າ</th>
+                                        <th>ລາຄາ</th>
+                                        <th>ຈຳນວນ</th>
+                                        <th width="10%">Option</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of importList;">
+                                        <td>{{item.name}}</td>
+                                        <td class="font-eng">{{item.price | number}} LAK</td>
+                                        <td class="font-eng">
+                                            <button type="button" class="btn btn-sm btn-primary fw-bold" (click)="decrease(item.pro_id, item.qty)">
+                                                <i class="fas fa-circle-minus"></i>
+                                            </button>
+                                            <span class="my-0 py-1 mx-2 font-eng">{{item.qty}}</span>
+                                            <button type="button" class="btn btn-sm btn-primary fw-bold" (click)="increase(item.pro_id, item.qty)">
+                                                <i class="fas fa-circle-plus"></i>
+                                            </button>
+                                        </td>
+                                        <td  width="10%">
+                                            <button class="btn btn-sm btn-outline-danger fw-bold" (click)="removeItem(item.pro_id)">
+                                                <i class="fas fa-circle-xmark"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-end mt-3">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="h5 fw-bold">ລວມທັງໝົດ: </td>
+                                            <td class="font-eng h5 text-end">{{grandTotal | number}} LAK</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary" [disabled]="!importForm.valid">
-                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
+                    <div class="row mt-3 justify-content-end">
+                        <div class="pe-lg-0 col-md-2">
+                            <button type="button" class="btn btn-outline-primary fw-bold w-100" (click)="onSaveImportList(importList)">
+                                <i class="fas fa-floppy-disk"></i>&nbsp;ບັນທຶກລາຍການ
                             </button>
                         </div>
-                        <div class="col-md-3">
-                            <button type="reset" class="btn btn-warning">
-                                <i class="fas fa-ban"></i>&nbsp;ຍົກເລີກ
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-danger fw-bold w-100" (click)="emptyList()">
+                                <i class="fas fa-circle-xmark"></i>&nbsp;ລ້າງລາຍການ
+                            </button>
+                        </div>
+                        <div class="ps-lg-0 col-md-2">
+                            <button type="button" class="btn btn-outline-warning text-dark fw-bold w-100" style="width: 180px;" onclick="window.location.reload(true)">
+                                <i class="fa-solid fa-arrows-rotate"></i> ໂຫຼດຄືນໃໝ່
                             </button>
                         </div>
                     </div>
@@ -79,10 +119,49 @@
             </fieldset>
         </div>
         <div class="card-footer">
-            <div class="col-md-3 ms-auto">
-                <button class="btn btn-outline-primary" routerLink="/import">
-                    <i class="fa-solid fa-angles-left"></i>&nbsp;ກັບຄືນ
+            <div class="col-md-2 ms-auto">
+                <button class="btn btn-outline-primary fw-bold w-100" routerLink="/import">
+                    <i class="fa-solid fa-angles-left"></i>&nbsp;ກັບຄືນໜ້າລາຍການ
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-primary" id="exampleModalLabel">ລາຍການສິນຄ້າທັງໝົດ</h4>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="table-responsive">
+                        <table *ngIf="productList.length" class="table" datatable>
+                            <thead>
+                                <tr>
+                                    <th>ສິນຄ້າ</th>
+                                    <th>ລາຍການ</th>
+                                    <th>ລາຄາ</th>
+                                    <th width="17%">ດຳເນີນການ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of productList;">
+                                    <td>
+                                        <img [src]="item.image" alt="{{item.name}}" class="img-fluid" width="90px">
+                                    </td>
+                                    <td>{{item.name}}</td>
+                                    <td class="font-eng">{{item.price | number}} LAK</td>
+                                    <td width="17%">
+                                        <button class="btn btn-outline-secondary" (click)="chooseItem(item)">
+                                            <i class="fas fa-circle-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -14,33 +14,35 @@
                 </div>
                 <div class="card-body">
                     <fieldset class="border border-primary px-3 pb-2 rounded-3">
-                        <legend class="float-none w-auto p-2 h3 text-primary m-2">ລາຍລະອຽດການສັ່ງຊື້</legend>
+                        <legend class="float-none w-auto p-2 h4 text-primary m-2">ລາຍລະອຽດການສັ່ງຊື້</legend>
 
                         <table *ngIf="orderDetailList.length" datatable [dtOptions]="dtOptions" class="table table-bordered">
                             <thead class="bg-secondary text-light">
                                 <tr role="row">
                                     <th>#</th>
-                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                    <!-- <th>ເລກທີໃບສັ່ງຊື້</th> -->
                                     <th>ສິນຄ້າ</th>
-                                    <th>ລາຄາຊື້</th>
+                                    <th>ລາຄາ</th>
                                     <th>ຈຳນວນ</th>
-                                    <th>Option</th>
+                                    <th>ລວມ</th>
+                                    <!-- <th>Option</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of orderDetailList; let i=index;">
                                     <td class="font-eng">{{i+1}}.</td>
-                                    <td class="font-eng">{{item.order_no}}</td>
+                                    <!-- <td class="font-eng">{{item.order_no}}</td> -->
                                     <td class="font-eng">{{item.pro_id}}</td>
                                     <td class="font-eng">{{item.price | number}} LAK</td>
                                     <td class="font-eng">{{item.qty}}</td>
-                                    <td>
+                                    <td class="font-eng">{{item.price*item.qty | number}} LAK</td>
+                                    <!-- <td>
                                         <div class="btn-group" role="group">
                                             <button class="btn btn-sm btn-danger" (click)="onDelete(item.order_no)">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -49,10 +51,11 @@
                             <thead class="bg-light">
                                 <tr role="row">
                                     <th>#</th>
-                                    <th>ລາຄາຊື້</th>
-                                    <th>ຈຳນວນ</th>
+                                    <!-- <th>ເລກທີໃບສັ່ງຊື້</th> -->
                                     <th>ສິນຄ້າ</th>
-                                    <th>ເລກທີໃບສັ່ງຊື້</th>
+                                    <th>ລາຄາ</th>
+                                    <th>ຈຳນວນ</th>
+                                    <th>ລວມ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,14 +67,7 @@
 
                     </fieldset>
                 </div>
-                <div class="card-footer">
-                    <button type="button" class="me-1 btn btn-warning" (click)="goToLink('')">
-                        <i class="fas fa-print"></i>&nbsp;ພິມໃບສັ່ງຊື້ສິນຄ້າ
-                    </button>
-                    <button type="button" class="ms-1 btn btn-danger" routerLink="/rep-order">
-                        <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
-                    </button>
-                </div>
+               
             </div>
         </div>
 

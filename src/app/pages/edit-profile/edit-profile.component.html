@@ -1,55 +1,60 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card shadow-lg border-1 rounded-lg mt-5 border-info">
+            <div class="card shadow-lg rounded-lg mt-5">
                 <div class="card-header">
-                    <h3 class="text-center font-weight-light my-4">ແກ້ໄຂຂໍ້ມູນສ່ວນຕົວ</h3>
+                    <h3 class="text-center text-primary fw-bold my-2">ແກ້ໄຂຂໍ້ມູນສ່ວນຕົວ</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form [formGroup]="updateForm" (submit)="onUpdateProfile()">
                         <div class="row mb-3 mt-3">
                             <div class="col-md-6">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputName" type="text" placeholder="Name"
-                                        required />
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" formControlName="name" id="inputName" type="text" placeholder="Name" required />
                                     <label for="inputName">ຊື່</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input class="form-control" id="inputUname" type="text" placeholder="Username"
-                                        readonly />
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" formControlName="username" id="inputUname" type="text" placeholder="Username" readonly />
                                     <label for="inputUname">ບັນຊີເຂົ້າໃຊ້</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputEmail" type="email" placeholder="Email"
-                                        required />
+                                    <input class="form-control" formControlName="email" id="inputEmail" type="email" placeholder="Email" required />
                                     <label for="inputEmail">ອີເມວ</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputPhone" type="text" placeholder="Phone"
-                                        required />
+                                <div class="form-floating mb-3">
+                                    <input class="form-control font-eng" formControlName="phone" id="inputPhone" type="text" placeholder="Phone" required />
                                     <label for="inputPhone">ເບີໂທ</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4 mb-0">
-                            <div class="d-grid">
-                                <a class="btn btn-info btn-block">ຢືນຢັນການແກ້ໄຂ</a>
+
+                        <div class="mb-0">
+                            <div class="row">
+                                <div class="col-md-4 ms-md-auto ms-lg-auto">
+                                    <button type="submit" class="btn btn-outline-primary fw-bold w-100">
+                                        <i class="fas fa-check"></i> ຢືນຢັນການແກ້ໄຂ
+                                    </button>
+                                </div>
+                                <div class="col-md-4 me-md-auto me-lg-auto">
+                                    <button type="reset" class="btn btn-outline-secondary fw-bold w-100">
+                                        <i class="fas fa-circle-xmark"></i> ຍົກເລີກ
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer text-center py-3">
                     <div class="d-block">
-                        <a href="#login" class="btn btn-primary" routerLink="/profile"><i
-                                class="fa-solid fa-angle-left"></i>&nbsp; ກັບຄືນໜ້າໂປຣໄຟລ໌</a>
+                        <a class="btn btn-outline-secondary fw-bold" routerLink="/profile">
+                            <i class="fa-solid fa-angles-left"></i>&nbsp; ກັບຄືນໜ້າໂປຣໄຟລ໌
+                        </a>
                     </div>
                 </div>
             </div>

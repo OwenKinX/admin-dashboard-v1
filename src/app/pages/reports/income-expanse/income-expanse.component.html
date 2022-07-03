@@ -1,60 +1,91 @@
-<div class="container-fluid px-4">
-    <div class="card my-3 shadow">
-        <div class="card-header">
-            <div class="text-end">
-                <button type="button" class="btn btn-danger">
-                    <i class="fas fa-file-pdf"></i>
-                </button>
-                &nbsp;
-                <button type="button" class="btn btn-success">
-                    <i class="fas fa-file-excel"></i>
-                </button>
+<div class="row">
+    <div class="pe-lg-1 col-md-6">
+        <div class="card mt-3 shadow">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h4 class="my-1 text-success">ລາຍງານລາຍຮັບຕັ້ງແຕ່ເດືອນ <strong>ມັງກອນ</strong> ຫາ <strong>ມິຖຸນາ</strong></h4>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger fw-bold" (click)="exportIncPDF()">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" id="prev-section">
+                <div id="incomeChart" #incomeChart>
+                    <app-charts-month></app-charts-month>
+                </div>
             </div>
         </div>
-        <div class="card-body" id="prev-section">
-            <div id="incexpTable" #incexpTable>
-                <table class="table table-bordered" id="income-expanse-table">
-                    <thead class="text-primary">
-                        <tr>
-                            <th colspan="7" class="text-center">
-                                <h3 class="my-1">ລາຍງານລາຍຮັບ-ລາຍຈ່າຍ ປະຈຳເດືອນ</h3>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td colspan="3"></td>
-                            <td colspan="2" class="h5 text-center my-1">ລາຍຮັບ</td>
-                            <td colspan="2" class="h5 text-center my-1">ລາຍຈ່າຍ</td>
-                        </tr>
-                        <tr class="text-light bg-secondary">
-                            <th>ລ/ດ</th>
-                            <th>ວັນທີ</th>
-                            <th>ລາຍການ</th>
-                            <th>ລາຍຮັບ</th>
-                            <th>ລວມ</th>
-                            <th>ລາຍຈ່າຍ</th>
-                            <th>ລວມ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table table-bordered">
-                    <tfoot class="bg-light">
-                        <tr class="text-primary">
-                            <td colspan="8" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ</td>
-                            <td class="text-center fw-bold font-eng"> LAK</td>
-                        </tr>
-                    </tfoot>
-                </table>
+    </div>
+    <div class="ps-lg-1 col-md-6">
+        <div class="card mt-3 shadow">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h4 class="my-1 text-danger">ລາຍງານລາຍຈ່າຍຕັ້ງແຕ່ເດືອນ <strong>ມັງກອນ</strong> ຫາ <strong>ມິຖຸນາ</strong></h4>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger fw-bold" (click)="exportExpPDF()">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" id="prev-section">
+                <div id="expanseChart" #expanseChart>
+                    <app-charts-exp-month></app-charts-exp-month>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-3 shadow">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h4 class="my-1 text-success">ລາຍງານລາຍຮັບພາຍໃນປີ</h4>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-secondary" (click)="downloadImage()">
+                        <i class="fas fa-image"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" id="prev-section">
+                <div id="screen" #screen class="p-2">
+                    <app-charts-year></app-charts-year>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <div class="col-md-12">
+        <div class="card mt-3 shadow">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <h4 class="my-1 text-danger">ລາຍງານລາຍຈ່າຍພາຍໃນປີ</h4>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-secondary" (click)="downloadImage()">
+                        <i class="fas fa-image"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" id="prev-section">
+                <div id="screen" #screen class="p-2">
+                    <app-charts-exp-year></app-charts-exp-year>
+                </div>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-#supplier_list{
-    height: 250px;
+.card-body{
+    height: 520px;
     overflow-y: auto;
 }

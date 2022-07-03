@@ -8,7 +8,7 @@
                 <button onclick="window.location.reload(true)" class="btn btn-outline-success">
                     <i class="fa-solid fa-rotate-right"></i>
                 </button>
-                <button class="btn btn-primary" routerLink="/add-cus">
+                <button class="btn btn-outline-primary fw-bold" routerLink="/add-cus">
                     <i class="fa-solid fa-circle-plus"></i>&nbsp;ເພີ່ມຂໍ້ມູນ
                 </button>
             </div>
@@ -43,13 +43,13 @@
                             <td class="font-eng">+856-20-{{user.phone}}</td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <button class="btn-sm btn btn-success" routerLink="/cus-view/{{user._id}}">
-                                        <i class="fas fa-circle-info"></i>
+                                    <button class="btn-sm btn text-secondary" routerLink="/cus-view/{{user._id}}">
+                                        <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="btn-sm btn btn-warning text-black" routerLink="/edit-cus/{{user._id}}">
+                                    <button class="btn-sm btn text-warning" routerLink="/edit-cus/{{user._id}}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn-sm btn btn-danger" (click)="onDelete(user._id, i)">
+                                    <button class="btn-sm btn text-danger" (click)="onDelete(user._id, i)">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -78,7 +78,7 @@
         </div>
         <div class="card-footer">
             <div class="text-end">
-                <button class="btn btn-danger" routerLink="/rep-customers">
+                <button class="btn btn-outline-danger fw-bold" routerLink="/rep-customers">
                     <i class="fas fa-file-lines"></i>&nbsp;ລາຍງານ
                 </button>
             </div>

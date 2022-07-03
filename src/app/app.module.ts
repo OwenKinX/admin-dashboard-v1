@@ -5,6 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxUpperCaseDirectiveModule } from 'ngx-upper-case-directive';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
+import { NgxPrintModule } from 'ngx-print';
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,8 +41,9 @@ import { RepSalesComponent } from './pages/reports/rep-sales/rep-sales.component
 import { RepEmpsComponent } from './pages/reports/rep-emps/rep-emps.component';
 import { RepImpComponent } from './pages/reports/rep-imp/rep-imp.component';
 import { RepOrderComponent } from './pages/reports/rep-order/rep-order.component';
-import { RepIncomeComponent } from './pages/reports/rep-income/rep-income.component';
-import { RepExpanseComponent } from './pages/reports/rep-expanse/rep-expanse.component';
+import { RepIncomeExpanseComponent } from './pages/reports/rep-income-expanse/rep-income-expanse.component';
+import { IncomeTableComponent } from './components/income-table/income-table.component';
+import { ExpanseTableComponent } from './components/expanse-table/expanse-table.component';
 
 import { PosComponent } from './pages/sales-services/pos/pos.component';
 import { OnlineComponent } from './pages/sales-services/online/online.component';
@@ -60,7 +63,6 @@ import { OrderManageComponent } from './pages/order-import/order-manage/order-ma
 import { AddProductComponent } from './pages/managements/products/add-product/add-product.component';
 import { ProductViewComponent } from './pages/managements/products/product-view/product-view.component';
 import { AddImportComponent } from './pages/order-import/import/add-import/add-import.component';
-import { EditImportComponent } from './pages/order-import/import/edit-import/edit-import.component';
 import { AddSaleComponent } from './pages/sales-services/add-sale/add-sale.component';
 import { EditSaleComponent } from './pages/sales-services/edit-sale/edit-sale.component';
 import { SaleDetailComponent } from './pages/sales-services/sale-detail/sale-detail.component';
@@ -69,10 +71,16 @@ import { ChartsMonthComponent } from './components/charts-month/charts-month.com
 import { ChartsYearComponent } from './components/charts-year/charts-year.component';
 import { IncomeExpanseComponent } from './pages/reports/income-expanse/income-expanse.component';
 import { OrderDetailComponent } from './pages/order-import/order-detail/order-detail.component';
+import { ImportDetailComponent } from './pages/order-import/import-detail/import-detail.component';
+
 
 import { AuthInterceptor } from './services/auth-interceptor';
 import { CachingInterceptor } from './interceptors/caching.interceptor';
 import { ProductCachingInterceptor } from './interceptors/product-caching.interceptor';
+import { OrderStatusPipe } from './pipes/order-status.pipe';
+import { ChartsExpComponent } from './components/charts-exp/charts-exp.component';
+import { ChartsExpMonthComponent } from './components/charts-exp-month/charts-exp-month.component';
+import { ChartsExpYearComponent } from './components/charts-exp-year/charts-exp-year.component';
 
 
 @NgModule({
@@ -108,8 +116,6 @@ import { ProductCachingInterceptor } from './interceptors/product-caching.interc
     RepEmpsComponent,
     RepImpComponent,
     RepOrderComponent,
-    RepIncomeComponent,
-    RepExpanseComponent,
     PosComponent,
     OnlineComponent,
     OrderComponent,
@@ -123,7 +129,6 @@ import { ProductCachingInterceptor } from './interceptors/product-caching.interc
     AddProductComponent,
     ProductViewComponent,
     AddImportComponent,
-    EditImportComponent,
     AddSaleComponent,
     EditSaleComponent,
     SaleDetailComponent,
@@ -131,7 +136,15 @@ import { ProductCachingInterceptor } from './interceptors/product-caching.interc
     ChartsMonthComponent,
     ChartsYearComponent,
     IncomeExpanseComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    ImportDetailComponent,
+    OrderStatusPipe,
+    ChartsExpComponent,
+    ChartsExpMonthComponent,
+    ChartsExpYearComponent,
+    RepIncomeExpanseComponent,
+    IncomeTableComponent,
+    ExpanseTableComponent
   ],
   imports: [
     BrowserModule,
@@ -143,7 +156,9 @@ import { ProductCachingInterceptor } from './interceptors/product-caching.interc
     SweetAlert2Module,
     BrowserAnimationsModule,
     NgxUpperCaseDirectiveModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPrintModule,
+    NgChartsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -164,6 +179,9 @@ import { ProductCachingInterceptor } from './interceptors/product-caching.interc
     },
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    OrderStatusPipe
+  ]
 })
 export class AppModule { }

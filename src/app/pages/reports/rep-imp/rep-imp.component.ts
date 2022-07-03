@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ImportsService } from '../../order-import/imports.service';
-import { DatePipe } from '@angular/common';
-import { Imports } from '../../order-import/imports.model';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
-
+import { timer } from 'rxjs';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-rep-imp',
   templateUrl: './rep-imp.component.html',
@@ -12,31 +11,24 @@ import jsPDF from 'jspdf';
 })
 export class RepImpComponent implements OnInit {
 
-  @ViewChild('importTable', {static:false}) el!:ElementRef;
+  @ViewChild('importTable') importTable!:ElementRef;
 
   importList:any = [];
-  importGrandTotal:any;
+  grandTotal:number = 0;
 
-  fileName:string = 'ProductSheets.xlsx';
+  fileName:string = 'ProductSheets';
   fileNameLao:string = 'ລາຍງານຂໍ້ມູນສິນຄ້າ';
-  today:string;
+  dateTime:Date;
 
   constructor(
-    private service:ImportsService,
-    private datePipe:DatePipe
+    private service:ImportsService
   ) { }
 
   ngOnInit(): void {
-    this.service.getImpReport().subscribe((res) => {
-      this.importList = res;
+
+    timer(0,1000).subscribe(() => {
+      this.dateTime = new Date();
     });
-
-    this.service.getTotalAmount().subscribe((res) => {
-      this.importGrandTotal = res;
-    })
-
-    const date = new Date();
-    this.today = this.datePipe.transform(date, "dd/MM/yyyy");
   }
 
   exportExcel(){
@@ -46,16 +38,42 @@ export class RepImpComponent implements OnInit {
     const wb:XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}`);
+    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}.xlsx`);
   }
 
   exportPDF(){
-    let pdf = new jsPDF();
-    pdf.html(this.el.nativeElement, {
-      callback:(pdf) => {
-        pdf.save(`${Date.now()}-ລາຍງານຂໍ້ມູນສິນຄ້າ.pdf`)
-      }
+    let DATA = document.getElementById('importTable');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 0, position, fileWidth, fileHeight);
+      PDF.save(`${Date.now()}-${this.fileNameLao}.pdf`);
     })
   }
 
+  filterReport(date:any){
+    this.service.filterImpReport(date).subscribe(res=> {
+      this.importList = res;
+      this.grandTotal = this.importList.reduce(function(acc:any, val:any){
+        return acc += val.price*val.qty;
+      },0);
+    })
+  }
+
+  displayReports(){
+    this.service.getImpReport().subscribe((res) => {
+      this.importList = res;
+      this.grandTotal = this.importList.reduce(function(acc:any, val:any){
+        return acc += val.price*val.qty;
+      },0);
+    });
+  }
+
+  emptyImpReport(){
+    this.importList = [];
+    this.grandTotal = 0;
+  }
 }

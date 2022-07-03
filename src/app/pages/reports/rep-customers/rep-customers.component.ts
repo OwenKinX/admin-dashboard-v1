@@ -3,6 +3,7 @@ import { CustomersService } from '../../managements/customers/customers.service'
 import * as XLSX from 'xlsx';
 import { jsPDF } from "jspdf";
 import { timer } from 'rxjs';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-rep-customers',
@@ -11,10 +12,10 @@ import { timer } from 'rxjs';
 })
 export class RepCustomersComponent implements OnInit {
 
-  @ViewChild('userTable',{static:false}) el!: ElementRef;
+  @ViewChild('userTable') userTable!:ElementRef;
 
   userList:any = [];
-  fileName:string = 'CustomerSheets.xlsx';
+  fileName:string = 'CustomerSheets';
   fileNameLao:string = 'ລາຍງານຂໍ້ມູນລູກຄ້າ';
   today:any;
   time:any;
@@ -48,15 +49,19 @@ export class RepCustomersComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
  
     /* save to file */  
-    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}`);
+    XLSX.writeFile(wb, `${Date.now()}-${this.fileNameLao}-${this.fileName}.xlsx`);
   }
 
   exportPDF() {
-    let pdf = new jsPDF();
-    pdf.html(this.el.nativeElement, {
-      callback:(pdf) => {
-        pdf.save(`${Date.now()}-ລາຍງານຂໍ້ມູນລູກຄ້າ.pdf`);
-      }
+    let DATA = document.getElementById('userTable');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 0, position, fileWidth, fileHeight);
+      PDF.save(`${Date.now()}-${this.fileNameLao}.pdf`);
     })
   }
 

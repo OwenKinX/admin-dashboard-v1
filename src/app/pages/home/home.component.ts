@@ -4,7 +4,7 @@ import { CustomersService } from '../managements/customers/customers.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SaleDetailService } from '../sales-services/saleDetail.service';
 import { timer } from 'rxjs';
-import { OrderDetailService } from '../order-import/orderDetail.service';
+import { ImportsService } from '../order-import/imports.service';
 
 @Component({
   selector: 'app-home',
@@ -17,15 +17,18 @@ export class HomeComponent implements OnInit {
     private prodService:ProductsService,
     private userService:CustomersService,
     private sDetailService:SaleDetailService,
-    private oderDetailService:OrderDetailService,
+    private importService:ImportsService,
     private spinner: NgxSpinnerService
   ){}
 
   // store stock
   inStock:any = [];
   userList:any = [];
-  incomeTotal:any = [];
-  expanseTotal:any = [];
+  incomeResult:any = [];
+  expanseResult:any = [];
+
+  monthIncome:number = 0;
+  monthExpanse:number = 0;
 
   dateTime:Date;
 
@@ -57,16 +60,18 @@ export class HomeComponent implements OnInit {
       this.spinner.show();
       setTimeout(() => {
         this.spinner.hide();
-        this.incomeTotal = res;
+        this.incomeResult = res;
+        this.monthIncome = this.incomeResult.map((incomes:any) => incomes.incTotal);
       },500);
     })
 
     // get month expanse
-    this.oderDetailService.monthExpanseReport().subscribe(res => {
+    this.importService.monthExpanseReport().subscribe(res => {
       this.spinner.show();
       setTimeout(() => {
         this.spinner.hide();
-        this.expanseTotal = res;
+        this.expanseResult = res;
+        this.monthExpanse = this.expanseResult.map((expanes:any) => expanes.expTotal)
       },500);
     })
 

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/ngx-spinner/animations/ball-scale-multiple.css";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
 
 /* width */
 ::-webkit-scrollbar {
@@ -30,6 +31,8 @@
     src: url('./public/fonts/NotoSansLaoUI-Regular.ttf');
     font-family: Saysettha;
     src: url('./public/fonts/saysettha_web.ttf');
+    /* font-family: Digital;
+    src: url('./public/fonts/DS-DIGI.TTF'); */
 }
 *{
     font-family: NotoSansLao;
@@ -37,12 +40,22 @@
 .font-lao{
     font-family: Saysettha;
 }
+
+.number-font{
+    /* font-family: 'Anek Malayalam', sans-serif;
+    font-family: 'Kdam Thmor Pro', sans-serif; */
+    font-family: 'Unica One', cursive;
+}
+
 #layoutSidenav{
     background-color: #dfe6ee;
 }
+/* .font-digital{
+    font-family: Digital;
+} */
 
 .font-eng{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Open Sans', sans-serif;
 }
 .navbar{
     background-color: #333;

@@ -3548,6 +3548,10 @@ textarea.form-control-lg {
   }
 }
 
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+}
+
 .dropup,
 .dropend,
 .dropdown,

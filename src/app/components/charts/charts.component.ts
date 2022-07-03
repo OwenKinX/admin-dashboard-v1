@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, registerables} from 'chart.js'
+import { SaleDetailService } from 'src/app/pages/sales-services/saleDetail.service';
+import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 @Component({
@@ -8,56 +9,60 @@ Chart.register(...registerables);
   styleUrls: ['./charts.component.css']
 })
 
-
 export class ChartsComponent implements OnInit {
+  result:any;
+  date:any;
+  amount:any;
+  chart:any = [];
 
-  constructor() { }
+  // get crypto chart rate
+  // datas:any;
+  // coinPrice: any;
+  // coinName: any;
+  // cryptoChart:any = [];
+
+  constructor(
+    private income:SaleDetailService
+  ) {}
 
   ngOnInit(): void {
-    new Chart("myChart", {
+
+    this.income.dailyIncomeReport().subscribe(res => {
+      this.result = res;
+      this.date = this.result.map((incomes:any) => incomes._id);
+      this.amount = this.result.map((incomes:any) => incomes.totalIncomeAmount);
+      this.chart = new Chart('dailyIncome', {
         type: 'bar',
         data: {
-          labels: ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມຶຖູນາ'],
+          labels: this.date,
           datasets: [
             {
-              label: 'ລາຍຮັບ 6 ເດືອນ',
-              data: [12, 14, 13, 10, 12, 16],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1
+              data: this.amount,
+              borderColor: 'rgb(75, 192, 192)',
+              label: 'ລາຍຮັບ',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderWidth: 2
             },
-            {
-              label: 'ລາຍຈ່າຍ 6 ເດືອນ',
-              data: [10, 12, 12, 9, 12, 14],
-                backgroundColor: 'rgba(215, 89, 89, 0.5)',
-                borderColor: 'rgba(215, 89, 89, 1)',
-              borderWidth: 1
-            },
-          ]
+          ],
         },
         options: {
-          responsive: true,
           scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-              title: {
-                display: true,
-                text: 'x 1,000,000',
-                align: 'start'
-              },
-              legend: {
-                labels: {
-                  font:{
-                    size: 12
-                  }
-                }
+              y: {
+                  beginAtZero: true
               }
           }
         }
+      });
     });
-  }
+
+    // this.income.cryptoData().subscribe( crypto => {
+    //   this.datas = crypto;
+    //   this.coinPrice = this.datas.data.coins.map((coins: any) => coins.price);
+    //   this.coinName = this.datas.data.coins.map((coins: any) => coins.name);
+    //   console.log(this.coinPrice);
+    //   console.log(this.coinName);
+    // })
+
+    }
 
 }

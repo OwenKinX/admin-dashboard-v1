@@ -21,11 +21,11 @@ export class ProductViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getId = this.activeRoute.snapshot.paramMap.get('id');
-    this.productService.getProduct(this.getId).subscribe((res) => {
+    this.productService.getProductInfo(this.getId).subscribe((res) => {
       this.spinService.show()
       setTimeout(() => {
+        this.Products = res;
         this.spinService.hide();
-        this.Products = [res]
       },500)
     })
   }

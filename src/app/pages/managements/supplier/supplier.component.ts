@@ -56,7 +56,7 @@ export class SupplierComponent implements OnInit {
     }
 
     const possible = "0123456789";
-    for(let i = 0; i < 4; i++)  {
+    for(let i = 0; i < 6; i++)  {
       this.genSupId += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
@@ -68,7 +68,7 @@ export class SupplierComponent implements OnInit {
       form.reset();
     this.supplierService.selectedSupplier = {
       _id: "",
-      sup_id:"",
+      sup_id: this.genSupId,
       name:"",
       phone: null,
       email:"",

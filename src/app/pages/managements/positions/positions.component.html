@@ -1,4 +1,4 @@
-<div class="container-fluid px-4">
+text<div class="container-fluid px-4">
     <div class="row mt-4">
         <div class="col-lg-8 col-md-12">
             <div class="card mb-4 shadow">
@@ -38,10 +38,10 @@
                                 <td class="font-eng">{{position.name_en}}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn-sm btn btn-warning" (click)="onEdit(position)">
+                                        <button class="btn-sm btn text-warning" (click)="onEdit(position)">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn-sm btn btn-danger" (click)="onDelete(position._id, positionForm)">
+                                        <button class="btn-sm btn text-danger" (click)="onDelete(position._id, positionForm)">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
@@ -94,10 +94,10 @@
                             <label for="inputPosition">ປ້ອນຕຳແໜ່ງພະນັກງານພາສາອັງກິດ</label>
                         </div>
                         <div class="mt-3">
-                            <button *ngIf="!isSwap" type="submit" class="btn btn-primary" style="width: 120px;" [disabled]="!positionForm.valid" ><i class="fas fa-circle-plus"></i>&nbsp;ເພີ່ມຂໍ້ມູນ</button>
-                            <button *ngIf="isSwap" type="submit" class="btn btn-success" style="width: 120px;" [disabled]="!positionForm.valid" ><i class="fas fa-circle-plus"></i>&nbsp;ແກ້ໄຂຂໍ້ມູນ</button>
+                            <button *ngIf="!isSwap" type="submit" class="btn btn-outline-primary fw-bold" style="width: 120px;" [disabled]="!positionForm.valid" ><i class="fas fa-circle-plus"></i>&nbsp;ເພີ່ມຂໍ້ມູນ</button>
+                            <button *ngIf="isSwap" type="submit" class="btn btn-outline-success fw-bold" style="width: 120px;" [disabled]="!positionForm.valid" ><i class="fas fa-circle-plus"></i>&nbsp;ແກ້ໄຂຂໍ້ມູນ</button>
                             &nbsp;
-                            <button type="button" class="btn btn-warning" style="width: 120px;" (click)="resetForm(positionForm)"><i class="fa-solid fa-ban"></i>&nbsp;ຍົກເລີກ</button>
+                            <button type="button" class="btn btn-outline-secondary fw-bold" style="width: 120px;" (click)="resetForm(positionForm)"><i class="fa-solid fa-circle-xmark"></i>&nbsp;ຍົກເລີກ</button>
                         </div>
                     </form>
                 </div>

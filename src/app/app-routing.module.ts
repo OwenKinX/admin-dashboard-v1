@@ -35,6 +35,7 @@ import { RepProductsComponent } from './pages/reports/rep-products/rep-products.
 import { RepImpComponent } from './pages/reports/rep-imp/rep-imp.component';
 import { RepOrderComponent } from './pages/reports/rep-order/rep-order.component';
 import { IncomeExpanseComponent } from './pages/reports/income-expanse/income-expanse.component';
+import { RepIncomeExpanseComponent } from './pages/reports/rep-income-expanse/rep-income-expanse.component';
 
 // Sale service
 import { PosComponent } from './pages/sales-services/pos/pos.component';
@@ -49,7 +50,7 @@ import { OrderComponent } from './pages/order-import/order/order.component';
 import { ImportComponent } from './pages/order-import/import/import.component';
 import { OrderManageComponent } from './pages/order-import/order-manage/order-manage.component';
 import { AddImportComponent } from './pages/order-import/import/add-import/add-import.component';
-import { EditImportComponent } from './pages/order-import/import/edit-import/edit-import.component';
+import { ImportDetailComponent } from './pages/order-import/import-detail/import-detail.component';
 import { OrderDetailComponent } from './pages/order-import/order-detail/order-detail.component';
 
 // About
@@ -62,7 +63,7 @@ const routes: Routes = [
   // management
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'edit-profile/:id', component: EditProfileComponent, canActivate: [AuthGuard] },
+  { path: 'edit-profile', component: EditProfileComponent, canActivate: [AuthGuard] },
   { path: 'change-password', component: ChangePasswordComponent },
   { path: 'login', component: LoginComponent, data: { animation: 'isLeft' }},
   { path: 'register', component: RegisterComponent, data: { animation: 'isRight' } },
@@ -101,6 +102,7 @@ const routes: Routes = [
   { path: 'rep-emps', component: RepEmpsComponent, canActivate: [AuthGuard] },
   { path: 'rep-imp', component: RepImpComponent, canActivate: [AuthGuard] },
   { path: 'income-expanse', component: IncomeExpanseComponent, canActivate: [AuthGuard] },
+  { path: 'rep-income-expanse', component: RepIncomeExpanseComponent, canActivate: [AuthGuard] },
   { path: 'rep-products', component: RepProductsComponent, canActivate: [AuthGuard] },
   { path: 'rep-sales', component: RepSalesComponent, canActivate: [AuthGuard] },
   { path: 'rep-order', component: RepOrderComponent, canActivate: [AuthGuard] },
@@ -119,7 +121,7 @@ const routes: Routes = [
   { path: 'order-detail', component: OrderDetailComponent, canActivate: [AuthGuard] },
   { path: 'import', component: ImportComponent, canActivate: [AuthGuard] },
   { path: 'add-import', component: AddImportComponent, canActivate: [AuthGuard] },
-  { path: 'edit-import/:id', component: EditImportComponent, canActivate: [AuthGuard] },
+  { path: 'import-detail/:imp_no', component: ImportDetailComponent, canActivate: [AuthGuard] },
 
   // About
   { path: 'about', component: AboutComponent }

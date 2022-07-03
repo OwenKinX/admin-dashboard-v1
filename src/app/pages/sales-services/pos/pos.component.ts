@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../managements/products/products.service';
 import { ProdTypeService } from '../../managements/prodtype/prodtype.service';
+import { CategoryService } from '../../managements/categories/category.service';
 
 @Component({
   selector: 'app-pos',
@@ -9,11 +10,12 @@ import { ProdTypeService } from '../../managements/prodtype/prodtype.service';
 })
 export class PosComponent implements OnInit {
 
-  // store data from product service
   productList:any = [];
 
-  // store type data from product type service
+  categoryList:any = [];
   typeList:any = [];
+
+  type_data:any = [];
 
   // store 
   saleList:any = [];
@@ -22,17 +24,28 @@ export class PosComponent implements OnInit {
 
   constructor(
     private proService:ProductsService,
-    private typeService:ProdTypeService
+    private typeService:ProdTypeService,
+    private cateService:CategoryService
   ) { }
 
   ngOnInit(): void {
     
-    // get all type
+    this.cateService.getCategories().subscribe((res) => {
+      this.categoryList = res;
+    })
+    
     this.typeService.getAllProdTypes().subscribe((res) => {
       this.typeList = res;
     });
 
     this.calculateGrandtotal();
+  }
+
+  onSelectCat(pc_id:any){
+    let data = this.typeList.filter((res: {category:string}) => {
+      return res.category.match(pc_id.target.value)
+    });
+    this.type_data = data;
   }
 
   // decrease product quantity
@@ -101,7 +114,7 @@ export class PosComponent implements OnInit {
     this.proService.getProductToSale().subscribe((res) => {
       this.productList = res;
       this.productList.forEach((a:any) => {
-        Object.assign(a, {qty:1})
+        Object.assign(a, {qty:1, price: a.price*1.05})
       })
     });
   }
@@ -110,7 +123,7 @@ export class PosComponent implements OnInit {
     this.proService.getProductToSaleFilter(selecttype).subscribe(res => {
       this.productList = res;
       this.productList.forEach((a:any) => {
-        Object.assign(a, {qty:1})
+        Object.assign(a, {qty:1, price: a.price*1.05})
       })
     })
   }

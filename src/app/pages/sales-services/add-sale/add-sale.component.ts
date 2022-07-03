@@ -5,6 +5,7 @@ import { CustomersService } from '../../managements/customers/customers.service'
 import { SalesService } from '../sales.service';
 import { SaleDetailService } from '../saleDetail.service';
 import { ProductsService } from '../../managements/products/products.service';
+import { timer } from 'rxjs';
 
 import Swal from 'sweetalert2';
 
@@ -32,6 +33,9 @@ export class AddSaleComponent implements OnInit {
   // ລາຍການສິນຄ້າທີ່ຈະຂາຍ
   grandTotal:number = 0;
 
+  // ດິງວັນທີ ປັດຈຸບັນ
+  dateTime:Date;
+
   constructor(
     private empService:EmpService,
     private userService:CustomersService,
@@ -48,12 +52,12 @@ export class AddSaleComponent implements OnInit {
     // sale data form
     this.saleForm = new FormGroup({
       invoice_no:new FormControl(this.saleId,{validators:[Validators.required]}),
-      sale_type:new FormControl(null,{validators:[Validators.required]}),
+      sale_type:new FormControl("POS",{validators:[Validators.required]}),
       cash:new FormControl(null,{validators:[Validators.required]}),
       date:new FormControl("",{validators:[Validators.required]}),
       delivery:new FormControl(""),
       customer:new FormControl(null),
-      employee:new FormControl(null,{validators:[Validators.required]})
+      employee:new FormControl(null)
     });
 
     // get all product
@@ -72,6 +76,10 @@ export class AddSaleComponent implements OnInit {
     // get all user
     this.userService.getUsers().subscribe((res) => {
       this.userList = res;
+    });
+
+    timer(0,1000).subscribe(() => {
+      this.dateTime = new Date();
     });
 
     // get calculate grand total

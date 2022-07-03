@@ -51,7 +51,6 @@
                                             <th style="width:15%;">ຈຳນວນ</th>
                                             <th style="width:25%;">ລວມ</th>
                                             <th style="width:5%;">Option</th>
-                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,17 +124,16 @@
                             <div class="form-floating mt-3">
                                 <select formControlName="status" id="sts" class="form-select">
                                     <option disabled selected value="null"> --- ລະບຸສະຖານະ --- </option>
-                                    <option value="ບໍ່ອະນຸມັດ">ບໍ່ອະນຸມັດ</option>
-                                    <option value="ຖ້າອະນຸມັດ">ລໍຖ້າການອະນຸມັດ</option>
-                                    <option value="ອະນຸມັດ">ອະນຸມັດການສັ່ງຊື້</option>
+                                    <option value="N">ບໍ່ອະນຸມັດ</option>
+                                    <option value="P">ລໍຖ້າການອະນຸມັດ</option>
                                 </select>
                                 <label for="sts">ກະລຸນາລະບຸສະຖານະ</label>
                             </div>
                             <div class="my-3">
-                                <button type="submit" class="btn btn-primary" style="width: 120px;" [disabled]="orderDataForm.invalid">
+                                <button type="submit" class="btn btn-outline-primary fw-bold" style="width: 120px;" [disabled]="orderDataForm.invalid">
                                     <i class="fas fa-circle-plus"></i>&nbsp;ບັນທຶກຂໍ້ມູນ
                                 </button>
-                                <button type="reset" class="ms-2 btn btn-warning" style="width: 120px;">
+                                <button type="reset" class="ms-2 btn btn-outline-secondary fw-bold" style="width: 120px;">
                                     <i class="fa-solid fa-circle-xmark"></i>&nbsp;ຍົກເລີກ
                                 </button>
                             </div>
@@ -146,13 +144,13 @@
         </div>
         <div class="card-footer">
             <div class="d-flex">
-                <button type="button" class="btn btn-primary" style="width: 180px;" (click)="onSaveOrderDetail(orderItems)">
-                    <i class="fas fa-floppy-disk"></i> ບັນທຶກລາຍການ
+                <button type="button" class="btn btn-outline-primary fw-bold" style="width: 180px;" (click)="onSaveOrderDetail(orderItems)">
+                    <i class="fas fa-floppy-disk"></i> ບັນທຶກການສັ່ງຊື້
                 </button>
-                <button type="button" class="ms-2 btn btn-danger" style="width: 180px;" (click)="emptyItems()">
-                    <i class="fas fa-trash-alt"></i> ລ້າງລາຍການ
+                <button type="button" class="ms-2 btn btn-outline-danger fw-bold" style="width: 180px;" (click)="emptyItems()">
+                    <i class="fas fa-circle-xmark"></i> ລ້າງລາຍການ
                 </button>
-                <button type="button" class="ms-2 btn btn-warning" style="width: 180px;" onclick="window.location.reload(true)">
+                <button type="button" class="ms-2 btn btn-outline-warning fw-bold text-dark" style="width: 180px;" onclick="window.location.reload(true)">
                     <i class="fa-solid fa-arrows-rotate"></i> ໂຫຼດຄືນໃໝ່
                 </button>
             </div>

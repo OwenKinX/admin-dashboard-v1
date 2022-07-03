@@ -31,7 +31,6 @@ export class OrderDetailService{
     addSup(supplier:any){
         this.selectSup.push(supplier);
         this.selectSupList.next(this.selectSup);
-        // console.log(this.selectSup);
     }
     clearSup(){
         this.selectSup = [];
@@ -86,7 +85,15 @@ export class OrderDetailService{
         return this.http.delete(`${this.api_url}/orderDetail/deletes/${order_no}`);
     }
 
-    monthExpanseReport(){
-        return this.http.get<any>(`${this.api_url}/expanse/report`)
+    getPurchase(order_no:string){
+        return this.http.get<any>(`${this.api_url}/orders/purchase?order_no=${order_no}`)
+    }
+
+    getOrderReportList(){
+        return this.http.get<any>(`${this.api_url}/orderdetail/reports`)
+    }
+
+    getReportByDate(startdate:any, lastdate:any){
+        return this.http.get<any>(`${this.api_url}/orderdetail/report?startdate=${startdate}&lastdate=${lastdate}`)
     }
 }

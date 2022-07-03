@@ -15,6 +15,10 @@ export class ImportsService {
         return this.http.post(`${this.api_url}/imports/add`, data);
     }
 
+    AddImportDetail( importdetail:any ){
+        return this.http.post(`${this.api_url}/importdetail/add`,importdetail)
+    }
+
     // get all data method
     getAllImports(){
         return this.http.get<any>(`${this.api_url}/imports`);
@@ -22,17 +26,11 @@ export class ImportsService {
 
     // get one data method
     getImports( id:string ){
-        return this.http.get<{
-            _id:string,
-            imp_no:string,
-            c_price:any,
-            imp_qty:any,
-            date:string,
-            bill_no:any,
-            product:string,
-            order:string,
-            employee:string
-        }>(`${this.api_url}/imports/${id}`);
+        return this.http.get<any>(`${this.api_url}/imports/${id}`);
+    }
+
+    getImportDetail(imp_no:string){
+        return this.http.get<any>(`${this.api_url}/importdetail/${imp_no}`);
     }
 
     // update data method
@@ -46,11 +44,30 @@ export class ImportsService {
     }
 
     getImpReport(){
-        return this.http.get(`${this.api_url}/imports/report`);
+        return this.http.get<any>(`${this.api_url}/imports/reports`);
     }
 
-    getTotalAmount(){
-        return this.http.get(`${this.api_url}/imports/amount`);
+    filterImpReport(date:any){
+        return this.http.get<any>(`${this.api_url}/imports/report?date=${date}`);
     }
 
+    expanseDailyReport(){
+        return this.http.get<any>(`${this.api_url}/expanse/daily`);
+    }
+
+    monthExpanseReport(){
+        return this.http.get<any>(`${this.api_url}/expanse/report`);
+    }
+
+    monthlyExpanseReport(month:any){
+        return this.http.get<any>(`${this.api_url}/expanse/monthly?month=${month}`);
+    }
+
+    sixMonthExpanse(){
+        return this.http.get<any>(`${this.api_url}/expanse/sixmonth`);
+    }
+
+    yearlyExpanseReport(){
+        return this.http.get<any>(`${this.api_url}/expanse/yearly`);
+    }
 }
