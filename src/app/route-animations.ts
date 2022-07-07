@@ -36,7 +36,7 @@ function slideTo(direction) {
         animate('300ms ease', style({ [direction]: '100%'}))
       ], optional),
       query(':enter', [
-        animate('300ms ease', style({ [direction]: '0%'}))
+        animate('500ms ease', style({ [direction]: '0%'}))
       ])
     ]),
     // Normalize the page style... Might not be necessary

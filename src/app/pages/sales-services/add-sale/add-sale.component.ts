@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EmpService } from '../../managements/employees/employees.service';
 import { CustomersService } from '../../managements/customers/customers.service';
 import { SalesService } from '../sales.service';
 import { SaleDetailService } from '../saleDetail.service';
 import { ProductsService } from '../../managements/products/products.service';
+import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 
 import Swal from 'sweetalert2';
@@ -30,7 +31,7 @@ export class AddSaleComponent implements OnInit {
   // ເລກບິນການຂາຍ
   saleId:string = `INV-40`;
 
-  // ລາຍການສິນຄ້າທີ່ຈະຂາຍ
+  // ລາຄາລວມ
   grandTotal:number = 0;
 
   // ດິງວັນທີ ປັດຈຸບັນ
@@ -42,6 +43,8 @@ export class AddSaleComponent implements OnInit {
     private saleService:SalesService,
     private productService:ProductsService,
     private saleDtlService:SaleDetailService,
+    private router:Router,
+    private ngZone:NgZone
   ) { }
 
   ngOnInit(): void {
@@ -88,7 +91,7 @@ export class AddSaleComponent implements OnInit {
 
   generateId(){
     const possible = "0123456789";
-    for(let i = 0; i < 9; i++)  {
+    for(let i = 0; i < 9; i++) {
       this.saleId += possible.charAt(Math.floor(Math.random() * possible.length));
     }
   }
@@ -143,7 +146,7 @@ export class AddSaleComponent implements OnInit {
         this.saleItems.push(productlist);
         localStorage.setItem('saleList', JSON.stringify(this.saleItems));
       }else{
-        localStorage.setItem('saleList', JSON.stringify(this.saleItems))
+        localStorage.setItem('saleList', JSON.stringify(this.saleItems));
       }
     }
     this.calculateGrandtotal();
@@ -153,7 +156,7 @@ export class AddSaleComponent implements OnInit {
     if(localStorage.getItem('saleList')){
       this.saleItems = JSON.parse(localStorage.getItem('saleList'));
       this.grandTotal = this.saleItems.reduce(function(acc:any, val:any){
-        return acc + (val.price*val.qty);
+        return acc += (val.price*val.qty);
       },0);
     }
   }
@@ -174,9 +177,9 @@ export class AddSaleComponent implements OnInit {
 
   // clear all items
   emptyItems(){
-    localStorage.removeItem('saleList');
     this.saleItems = [];
     this.grandTotal = 0;
+    localStorage.removeItem('saleList');
   }
 
   onSaveSaleData():any{
@@ -212,7 +215,7 @@ export class AddSaleComponent implements OnInit {
   onSaveSaleDetail(saleDetail:any){
     Swal.fire({
       icon: 'question',
-      title: 'ຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ບໍ ?',
+      title: 'ຢືນຢັນການບັນທຶກ',
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: 'ຕົກລົງ',
@@ -225,8 +228,10 @@ export class AddSaleComponent implements OnInit {
             title: 'ບັນທຶກຂໍ້ມູນສຳເລັດ',
             showConfirmButton: false,
             timer: 1500
-          })
+          });
+          // this.onUpdateStock(saleDetail)
           this.emptyItems();
+          this.ngZone.run(() => this.router.navigate(['/sale-manage']));
         });
       }
     }).catch(err => {
@@ -237,5 +242,9 @@ export class AddSaleComponent implements OnInit {
         showConfirmButton: true
       });
     })
+  }
+
+  onUpdateStock(saleItems:any){
+    this.saleDtlService.UpdateSaleDetail(saleItems);
   }
 }

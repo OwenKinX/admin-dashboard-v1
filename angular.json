@@ -34,7 +34,7 @@
               "src/styles.css",
               "src/public/css/styles.css",
               "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
-              "node_modules/ngx-spinner/animations/ball-scale-multiple.css"
+              "node_modules/ngx-spinner/animations/pacman.css"
             ],
             "scripts": [
               "src/public/js/bootstrap.bundle.min.js",

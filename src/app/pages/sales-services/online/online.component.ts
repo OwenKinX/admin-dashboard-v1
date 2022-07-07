@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../cart.service';
+import { SalesService } from '../sales.service';
+import { SaleDetailService } from '../saleDetail.service';
+import { CustomersService } from '../../managements/customers/customers.service';
+import { timer } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-online',
@@ -8,64 +12,97 @@ import { CartService } from '../cart.service';
 })
 export class OnlineComponent implements OnInit {
 
-  cartLists:any = [];
-  cartList:any = [];
+  receiptno_temp:any;           //store inv_no in array, because inv_no are in many object
+  receiptno:any;
 
-  c_name_temp:any;
-  c_tel_temp:any;
-  c_email_temp:any;
-  c_province_temp:any;
-  c_district_temp:any;
-  c_village_temp:any;
+  grandTotal:number = 0;
+  grandQty:number = 0;
 
-  c_name:string;
-  c_tel:number;
-  c_email:string;
-  c_province:string;
-  c_district:string;
-  c_village:string;
+  dateTime:Date;
+  
+  saleOnlineList:any = [];
+  dtOptions:DataTables.Settings = {};
 
+  listReceipt:any = [];
+
+  employee_temp:any;
+  customer_temp:any;
+  employee:string;
+  customer:number;
 
   constructor(
-    private cartService:CartService
+    private saleService:SalesService,
+    private saleDetail:SaleDetailService,
+    private user:CustomersService
   ) { }
 
   ngOnInit(): void {
-    this.cartService.GetCart().subscribe((res) => {
-      this.cartLists = res;
+    this.saleService.getOnlineSales().subscribe(data => {
+      this.saleOnlineList = data
     });
-    this.cartList.forEach((a:any)=>{
-      Object.assign(a, {price:a.price*1.05});
+
+    timer(0,1000).subscribe(() => {
+      this.dateTime = new Date();
+    });
+
+    this.dtOptions = {
+      pageLength: 5,
+      lengthMenu: [5, 10, 20, 50, 100]
+    }
+  }
+
+  getReceipt(invno:string){
+    this.saleDetail.getBillReceipt(invno).subscribe( receipt => {
+      this.listReceipt = receipt;
+
+      // store inv_no, cus_id and emp_id in each temp[]
+      this.receiptno_temp = this.listReceipt.map((bill:any) => bill.inv_no);
+      this.customer_temp = this.listReceipt.map((bill:any) => bill.customer);
+      this.employee_temp = this.listReceipt.map((bill:any) => bill.employee);
+
+      // get only index or any index
+      this.receiptno = this.receiptno_temp[0];
+      this.customer = this.customer_temp[0];
+      this.employee = this.employee_temp[0];
+
+      this.grandTotal = this.listReceipt.reduce(function(acc:any, val:any){
+        return acc += (val.price*val.qty);
+      },0);
+
+      this.grandQty = this.listReceipt.reduce(function(acc:any, val:any){
+        return acc += val.qty;
+      },0);
     });
   }
 
-  getUserDetail(id:any){
-    this.cartService.getUserCart(id).subscribe( data => {
-      this.cartList = data;
-
-      this.c_name_temp = this.cartList.map((arr:any) => arr.c_name);
-      this.c_tel_temp = this.cartList.map((arr:any) => arr.c_tel);
-      this.c_email_temp = this.cartList.map((arr:any) => arr.c_email);
-      this.c_province_temp = this.cartList.map((arr:any) => arr.c_address.province);
-      this.c_district_temp = this.cartList.map((arr:any) => arr.c_address.district);
-      this.c_village_temp = this.cartList.map((arr:any) => arr.c_address.village);
-
-      this.c_name = this.c_name_temp[0];
-      this.c_tel = this.c_tel_temp[0];
-      this.c_email =  this.c_email_temp[0];
-      this.c_province = this.c_province_temp[0];
-      this.c_district = this.c_district_temp[0];
-      this.c_village = this.c_village_temp[0];
-
-      this.cartList.forEach((a:any)=>{
-        Object.assign(a, {price:a.price*1.05});
-      });
+  userData:any = [];
+  getUserData(cus_id:any){
+    this.user.getUserProfile(cus_id).subscribe( data => {
+      this.userData = [data];
     })
   }
 
-  onDelete(id:any,){
-    this.cartService.DeleteCart(id).subscribe(() => {
-      
+  onDelete( id:any, i:any ){
+    Swal.fire({
+      title: 'ຕ້ອງການລຶບຂໍ້ມູນແທ້ບໍ ?',
+      text: "ຖ້າລຶບແລ້ວຈະບໍ່ສາມາກູ້ຄືນໄດ້!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ລຶບຂໍ້ມູນ',
+      cancelButtonText: 'ຍົກເລີກ'
+    }).then((result) => {
+      if(result.isConfirmed){
+        this.saleService.deleteSale(id).subscribe(()=>{
+          this.saleOnlineList.splice(i,1);
+        })
+        Swal.fire(
+          'ລຶບຂໍ້ມູນສຳເລັດ!',
+          'ຂໍ້ມູນໄດ້ຖືກລຶບອອກຈາກລະບົບແລ້ວ',
+          'success'
+        )
+      }
     })
   }
 }

@@ -21,7 +21,10 @@ export class AuthService {
 
   api_url:string = 'http://localhost:8001/admin';
   
-  constructor(private http:HttpClient, public router:Router) {  }
+  constructor(
+    private http:HttpClient, 
+    public router:Router
+  ) {  }
 
   getToken(){
     return this.token;

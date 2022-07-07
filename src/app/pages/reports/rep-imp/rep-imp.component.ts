@@ -15,6 +15,7 @@ export class RepImpComponent implements OnInit {
 
   importList:any = [];
   grandTotal:number = 0;
+  grandQty:number = 0;
 
   fileName:string = 'ProductSheets';
   fileNameLao:string = 'ລາຍງານຂໍ້ມູນສິນຄ້າ';
@@ -60,6 +61,10 @@ export class RepImpComponent implements OnInit {
       this.grandTotal = this.importList.reduce(function(acc:any, val:any){
         return acc += val.price*val.qty;
       },0);
+
+      this.grandQty = this.importList.reduce(function(acc:any, val:any){
+        return acc += val.qty;
+      },0);
     })
   }
 
@@ -68,6 +73,10 @@ export class RepImpComponent implements OnInit {
       this.importList = res;
       this.grandTotal = this.importList.reduce(function(acc:any, val:any){
         return acc += val.price*val.qty;
+      },0);
+
+      this.grandQty = this.importList.reduce(function(acc:any, val:any){
+        return acc += val.qty;
       },0);
     });
   }

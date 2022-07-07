@@ -19,6 +19,10 @@ export class SalesService {
     return this.http.get<any>(`${this.api_url}/sales`);
   }
 
+  getOnlineSales(){
+    return this.http.get<any>(`${this.api_url}/sales/online`);
+  }
+
   getSale(id:string){
     return this.http.get<any>(`${this.api_url}/sales/${id}`);
   }

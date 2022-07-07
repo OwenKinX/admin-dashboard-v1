@@ -24,8 +24,8 @@ export class ListProductComponent implements OnInit {
     this.productService.getAllProduct().subscribe((res) => {
       this.spinner.show();
       setTimeout(() => {
-        this.productList = res;
         this.spinner.hide();
+        this.productList = res;
       },500)
     });
 

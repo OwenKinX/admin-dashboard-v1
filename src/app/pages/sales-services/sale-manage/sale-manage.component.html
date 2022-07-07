@@ -92,17 +92,17 @@
                 <div class="modal-body p-3">
                     <div id="printSection" style="font-size: 12px;">
                         <div class="mt-3 mb-4 text-center">
-                            <img src="assets/images/logo.png" width="90px" alt="ຮູບໂລໂກ້ຮ້ານ"><br>
+                            <img src="assets/images/logo.png" width="80px" alt="ຮູບໂລໂກ້ຮ້ານ"><br>
                             ຮ້ານ SS ຊີ້ນສະໄລ້ ແລະ ອາຫານແຊ່ແຂງ<br>
                             ບ.ດົງຄຳຊ້າງ, ມ.ຫາດຊາຍຟອງ, ນະຄອນຫຼວງວຽງຈັນ
                         </div>
                         <div class="row my-3">
-                            <div class="col-sm-8 font-lao">
+                            <div class="col-sm-8 font-lao" style="font-size: 7px;">
                                 ເລກບິນ: {{receiptno}}<br>
                                 ລູກຄ້າ: {{customer}}<br>
                                 ພະນັກງານຂາຍ: {{employee}}
                             </div>
-                            <div class="col-sm-4 font-lao text-end">
+                            <div class="col-sm-4 font-lao text-sm-end" style="font-size: 7px;">
                                 ວັນທີ: {{ dateTime | date: 'dd/MM/yyyy'}}<br>
                                 ເວລາ: {{ dateTime | date: 'HH:mm:ss'}}
                             </div>
@@ -136,7 +136,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        =================================
+                        ============================
                         <h5 class="text-center">ຂອບໃຈ | Thank You</h5>
                     </div>
                     
@@ -147,7 +147,9 @@
                         <button type="button" class="btn btn-outline-warning fw-bold text-dark" [printStyle]="{ body:{
                             'width': '80mm',
                             'height': '100%',
-                            'position': 'absolute'
+                            'position': 'absolute',
+                            'margin':'0',
+                            'padding':'0'
                         }}" [useExistingCss]="true" printSectionId="printSection" ngxPrint data-bs-dismiss="modal" aria-label="Close">
                             <i class="fas fa-print"></i> ພິມໃບບິນ
                         </button>

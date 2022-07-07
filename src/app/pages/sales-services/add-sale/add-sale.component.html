@@ -3,7 +3,7 @@
         <div class="card-header p-2">
             <div class="d-flex justify-content-between">
                 <h4 class="my-1 fw-bold text-primary">
-                    <i class="fas fa-cart-plus"></i>&nbsp;ຈັດການການຂາຍ
+                    <i class="fas fa-tags"></i>&nbsp;ຈັດການການຂາຍ
                 </h4>
                 <!-- Button trigger modal -->
                 <div>
@@ -79,7 +79,7 @@
                                     <div class="form-floating mb-3">
                                         <select formControlName="employee" id="e" class="form-select" placeholder="sale">
                                             <option selected disabled value="null"> --- ກະລຸນາລະບຸພະນັກງານຂາຍ --- </option>
-                                            <option *ngFor="let item of empList;" value="{{item.emp_id}}">{{item.name}} {{item.surname}}</option>
+                                            <option *ngFor="let item of empList;" value="{{item.emp_id}}">{{item.emp_id}} {{item.name}}</option>
                                         </select>
                                         <label for="e">ພະນັກງານຂາຍ</label>
                                     </div>
@@ -172,7 +172,7 @@
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-end">
-                <button type="button" class="ms-2 btn btn-outline-primary fw-bold" style="width: 180px;" (click)="onSaveSaleDetail(saleItems)">
+                <button type="button" class="ms-2 btn btn-outline-primary fw-bold" style="width: 180px;" (click)="onSaveSaleDetail(saleItems);">
                     <i class="fas fa-floppy-disk"></i> ບັນທຶກລາຍການ
                 </button>
                 <button type="button" class="ms-2 btn btn-outline-danger fw-bold" style="width: 180px;" (click)="emptyItems()">

@@ -135,8 +135,24 @@
                     <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-3">
+                    <div class="alert alert-warning">
+                        <form>
+                        <div class="row">
+                            
+                            <div class="col-md-3">
+                                <input type="date" class="form-control font-eng" #date>
+                            </div>
+                            <div class="ps-lg-0 col-md-3">
+                                <button type="submit" class="btn btn-outline-primary fw-bold" (click)="onDisplayODetail(date.value)">
+                                    <i class="fas fa-search"></i>&nbsp;ສະແດງລາຍການສັ່ງຊື້
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    </div>
                     <div class="table-responsive">
-                        <table *ngIf="productList.length" class="table" datatable>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>ສິນຄ້າ</th>
@@ -148,9 +164,9 @@
                             <tbody>
                                 <tr *ngFor="let item of productList;">
                                     <td>
-                                        <img [src]="item.image" alt="{{item.name}}" class="img-fluid" width="90px">
+                                        <img [src]="item.p_image" alt="{{item.p_name}}" class="img-fluid" width="90px">
                                     </td>
-                                    <td>{{item.name}}</td>
+                                    <td>{{item.p_name}}</td>
                                     <td class="font-eng">{{item.price | number}} LAK</td>
                                     <td width="17%">
                                         <button class="btn btn-outline-secondary" (click)="chooseItem(item)">

@@ -96,4 +96,8 @@ export class OrderDetailService{
     getReportByDate(startdate:any, lastdate:any){
         return this.http.get<any>(`${this.api_url}/orderdetail/report?startdate=${startdate}&lastdate=${lastdate}`)
     }
+
+    getOrderDetailByOrderDate(date:any){
+        return this.http.get<any>(`${this.api_url}/imports/order/product?date=${date}`);
+    }
 }

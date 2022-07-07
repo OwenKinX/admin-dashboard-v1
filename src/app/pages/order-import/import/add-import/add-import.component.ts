@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductsService } from 'src/app/pages/managements/products/products.service';
 import { EmpService } from 'src/app/pages/managements/employees/employees.service';
 import { OrdersService } from '../../orders.service';
+import { OrderDetailService } from '../../orderDetail.service';
 
 import Swal from 'sweetalert2';
 @Component({
@@ -20,7 +21,8 @@ export class AddImportComponent implements OnInit {
     private importService:ImportsService,
     private productService:ProductsService,
     private empService:EmpService,
-    private orderService:OrdersService
+    private orderService:OrdersService,
+    private detailService:OrderDetailService
   ) { }
 
   importForm:FormGroup;
@@ -37,13 +39,6 @@ export class AddImportComponent implements OnInit {
     // generate id
     this.generateId();
 
-    // get product
-    this.productService.getProductToOrder().subscribe((res) => {
-      this.productList = res;
-      this.productList.forEach((a:any) => {
-        Object.assign(a, {imp_no: this.genImpId,qty:1});
-      });
-    })
     // get employee
     this.empService.getEmps().subscribe((res) => {
       this.employees = res;
@@ -91,6 +86,15 @@ export class AddImportComponent implements OnInit {
     }
     localStorage.setItem('importList',JSON.stringify(this.importList));
     this.calculateGrandtotal();
+  }
+
+  onDisplayODetail(date:any){
+    this.detailService.getOrderDetailByOrderDate(date).subscribe( data => {
+      this.productList = data;
+      this.productList.forEach((a:any) => {
+        Object.assign(a, {imp_no: this.genImpId});
+      });
+    })
   }
 
   chooseItem(importlist:any){

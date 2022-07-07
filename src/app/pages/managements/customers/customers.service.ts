@@ -28,6 +28,10 @@ export class CustomersService {
     }))
   }
 
+  getUserProfile(id:any){
+    return this.http.get(`http://localhost:8001/customer/profile/${id}`);
+  }
+
   updateUser( id:any,user:any ){
     return this.http.put(`${this.api_url}/customer/update/${id}`, user);
   }

@@ -102,7 +102,21 @@
                                     <td class="font-eng">{{i+1}}.</td>
                                     <td class="font-eng">{{item.order_no}}</td>
                                     <!-- <td> {{item.status | orderStatus}} </td> -->
-                                    <td> {{item.status}} </td>
+                                    <td *ngIf="item.status === 'P'">
+                                        <span style="padding: 5px;">
+                                            <i class="fas fa-arrows-rotate text-warning"></i> ລໍຖ້າອະນຸມັດ
+                                        </span>
+                                    </td>
+                                    <td *ngIf="item.status === 'Y'">
+                                        <span style="padding: 5px;">
+                                            <i class="fas fa-circle-check text-success"></i> ອະນຸມັດ
+                                        </span>
+                                    </td>
+                                    <td *ngIf="item.status === 'N'">
+                                        <span style="padding: 5px;">
+                                            <i class="fas fa-circle-xmark text-danger"></i> ບໍ່ອະນຸມັດ
+                                        </span>
+                                    </td>
                                     <td class="font-eng">{{item.date | date:'dd/MM/yyyy'}}</td>
                                     <td class="font-eng">{{item.supplier}}</td>
                                     <td class="font-eng">{{item.employee}}</td>

@@ -32,6 +32,10 @@ export class SaleDetailService {
         return this.http.post(`${this.api_url}/saledetail/add`, saleDetail);
     }
 
+    decreaseStock(saleDetail:any){
+        return this.http.patch(`${this.api_url}/saledetail/add`, saleDetail);
+    }
+
     // GetAllSaleDetail(){
     //     return this.http.get(`${this.api_url}/saledetail`);
     // }

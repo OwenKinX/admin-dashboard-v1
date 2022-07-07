@@ -48,9 +48,9 @@
                             <th>#</th>
                             <th>ສິນຄ້າ</th>
                             <th>ລາຄາ</th>
-                            <th>ຈຳນວນນຳເຂົ້າ</th>
                             <th>ວັນທີສັ່ງຊື້</th>
                             <th>ວັນທີນຳເຂົ້າ</th>
+                            <th>ຈຳນວນນຳເຂົ້າ</th>
                             <th>ລວມ</th>
                         </tr>
                     </thead>
@@ -59,12 +59,17 @@
                             <td class="font-eng">{{i+1}}.</td>
                             <td>{{item.p_name}}</td>
                             <td class="font-eng">{{item.price | number}} LAK</td>
-                            <td class="font-eng">{{item.qty}}</td>
                             <td class="font-eng">{{item.order_date | date:'dd/MM/yyyy'}}</td>
                             <td class="font-eng">{{item.date | date:'dd/MM/yyyy'}}</td>
+                            <td class="font-eng">{{item.qty}}</td>
                             <td class="font-eng">{{item.price*item.qty | number}} LAK</td>
                         </tr>
-                        <tr class="bg-light">
+                        <tr class="text-primary bg-light">
+                            <td colspan="5" class="text-end fw-bold fs-6">ຈຳນວນລວມທັງໝົດ:</td>
+                            <td class="fw-bold font-eng fs-6">{{grandQty | number}}</td>
+                            <td></td>
+                        </tr>
+                        <tr  class="text-primary bg-light">
                             <td colspan="6" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ: </td>
                             <td class="text-center fw-bold font-eng">{{grandTotal | number}} LAK</td>
                         </tr>
@@ -114,9 +119,9 @@
                                     <th class="font-lao">ລ/ດ</th>
                                     <th class="font-lao">ສິນຄ້າ</th>
                                     <th class="font-lao">ລາຄາ</th>
-                                    <th class="font-lao">ຈຳນວນນຳເຂົ້າ</th>
                                     <th class="font-lao">ວັນທີສັ່ງຊື້</th>
                                     <th class="font-lao">ວັນທີນຳເຂົ້າ</th>
+                                    <th class="font-lao">ຈຳນວນນຳເຂົ້າ</th>
                                     <th class="font-lao">ລວມ</th>
                                 </tr>
                             </thead>
@@ -125,10 +130,15 @@
                                     <td class="font-eng">{{i+1}}.</td>
                                     <td class="font-lao">{{item.p_name}}</td>
                                     <td class="font-eng">{{item.price}} LAK</td>
-                                    <td class="font-eng">{{item.qty}}</td>
                                     <td class="font-eng">{{item.order_date | date:'dd/MM/yyyy'}}</td>
                                     <td class="font-eng">{{item.date | date:'dd/MM/yyyy'}}</td>
+                                    <td class="font-eng">{{item.qty}}</td>
                                     <td class="font-eng">{{item.price*item.qty | number}} LAK</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-end fw-bold fs-6">ຈຳນວນລວມທັງໝົດ:</td>
+                                    <td class="fw-bold font-eng fs-6">{{grandQty | number}}</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" class="text-end fw-bold">ມູນຄ່າລວມທັງໝົດ: </td>
